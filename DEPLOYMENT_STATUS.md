@@ -3,10 +3,22 @@
 ## ✅ GITHUB DEPLOYMENT SUCCESSFUL
 
 **Repository**: https://github.com/souravverma5436/sourav-portfolio
-**Latest Commit**: `ddc662d` - Fix logout button functionality
+**Latest Commit**: `c2c2896` - Add Websites category with full admin support
 **Status**: ✅ **PUSHED SUCCESSFULLY**
 
-## 📦 LATEST UPDATE - LOGOUT FIX
+## 📦 LATEST UPDATE - WEBSITES FEATURE
+
+### 🌐 **Websites Category Added**:
+- ✅ Added "Websites" category to portfolio with website URL field
+- ✅ Added "Websites" service with "On Demand" pricing support
+- ✅ Added image upload/URL option for portfolio and services
+- ✅ Added website link display in portfolio and services pages
+- ✅ Updated contact form to include Websites service option
+- ✅ Enhanced admin dashboard with full CRUD for all new fields
+- ✅ Admin can upload images via URL and add website links
+- ✅ Supports both numeric pricing and "On Demand" text
+
+## 📦 PREVIOUS UPDATE - LOGOUT FIX
 
 ### 🔧 **Logout Button Fix**:
 - ✅ Fixed AdminDashboard handleLogout function (removed axios reference)
