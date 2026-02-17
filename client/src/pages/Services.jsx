@@ -46,6 +46,13 @@ const Services = () => {
           description: 'Compelling poster designs and advertisements that capture attention and drive action',
           priceINR: 3320,
           features: ['Event Posters', 'Print Ads', 'Digital Banners', 'Promotional Materials']
+        },
+        {
+          _id: '5',
+          name: 'Website Development',
+          description: 'Professional website design and development services. From landing pages to full-featured web applications, built with modern technologies and best practices.',
+          priceINR: 15000,
+          features: ['Responsive Design', 'Modern UI/UX', 'SEO Optimized', 'Fast Loading', 'Mobile Friendly', 'Custom Development']
         }
       ]
       setServices(fallbackServices)
@@ -60,7 +67,8 @@ const Services = () => {
       'Branding': '🏢',
       'Social Media Creatives': '📱',
       'Posters & Ads': '📢',
-      'Websites': '🌐'
+      'Websites': '🌐',
+      'Website Development': '💻'
     }
     return icons[serviceName] || '✨'
   }

@@ -86,6 +86,24 @@ const Portfolio = () => {
           description: 'Creative Instagram story templates',
           imageUrl: 'https://via.placeholder.com/400x300/8b5cf6/ffffff?text=Insta+Stories',
           tags: ['Social Media', 'Instagram', 'Templates']
+        },
+        {
+          _id: '7',
+          title: 'Spark Soul - Spiritual Wellness Platform',
+          category: 'Websites',
+          description: 'A modern spiritual wellness platform featuring meditation guides, mindfulness resources, and personal growth tools. Built with React and modern UI/UX principles.',
+          imageUrl: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=600&fit=crop',
+          websiteUrl: 'https://spark-soul.vercel.app/',
+          tags: ['Website', 'React', 'Wellness', 'Modern Design', 'Responsive']
+        },
+        {
+          _id: '8',
+          title: 'DogPetel - Pet Care & Services',
+          category: 'Websites',
+          description: 'Comprehensive pet care platform offering veterinary services, pet supplies, and care tips. Features appointment booking and community forums.',
+          imageUrl: 'https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=800&h=600&fit=crop',
+          websiteUrl: 'https://dogpetel.vercel.app/',
+          tags: ['Website', 'Pet Care', 'E-commerce', 'Community', 'Responsive']
         }
       ]
       setProjects(fallbackProjects)
