@@ -6,6 +6,7 @@ import { apiClient } from '../utils/api'
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('messages')
+  const [expandedMessage, setExpandedMessage] = useState(null)
   const [stats, setStats] = useState(null)
   const [messages, setMessages] = useState([])
   const [portfolio, setPortfolio] = useState([])
@@ -487,46 +488,60 @@ const AdminDashboard = () => {
                       </thead>
                       <tbody className="divide-y divide-gray-700">
                         {messages.map((message) => (
-                          <motion.tr
-                            key={message._id}
-                            className="hover:bg-dark-lighter/50 transition-colors"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                          >
-                            <td className="px-3 sm:px-6 py-4">
-                              <div>
-                                <div className="font-medium text-white text-sm">{message.name}</div>
-                                <div className="text-xs text-gray-400 truncate max-w-[120px] sm:max-w-none">{message.email}</div>
-                                {message.phone && (
-                                  <div className="text-xs text-gray-500 truncate max-w-[120px] sm:max-w-none">📱 {message.phone}</div>
-                                )}
-                              </div>
-                            </td>
-                            <td className="px-3 sm:px-6 py-4 hidden sm:table-cell">
-                              <span className="px-2 py-1 bg-primary/20 text-primary rounded-full text-xs">
-                                {message.service}
-                              </span>
-                            </td>
-                            <td className="px-3 sm:px-6 py-4 hidden md:table-cell">
-                              <div className="max-w-md text-gray-300 text-sm break-words">
-                                {message.message}
-                              </div>
-                            </td>
-                            <td className="px-3 sm:px-6 py-4">
-                              <select
-                                value={message.status}
-                                onChange={(e) => handleStatusUpdate(message._id, e.target.value)}
-                                className={`px-2 py-1 rounded-full text-xs border-0 cursor-hover ${getStatusColor(message.status)}`}
-                              >
-                                <option value="new">New</option>
-                                <option value="read">Read</option>
-                                <option value="replied">Replied</option>
-                              </select>
-                            </td>
-                            <td className="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-400 hidden sm:table-cell">
-                              {new Date(message.createdAt).toLocaleDateString()}
-                            </td>
-                          </motion.tr>
+                          <React.Fragment key={message._id}>
+                            <motion.tr
+                              className="hover:bg-dark-lighter/50 transition-colors cursor-pointer"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              onClick={() => setExpandedMessage(expandedMessage === message._id ? null : message._id)}
+                            >
+                              <td className="px-3 sm:px-6 py-4">
+                                <div>
+                                  <div className="font-medium text-white text-sm">{message.name}</div>
+                                  <div className="text-xs text-gray-400 truncate max-w-[120px] sm:max-w-none">{message.email}</div>
+                                  {message.phone && (
+                                    <div className="text-xs text-gray-500 truncate max-w-[120px] sm:max-w-none">📱 {message.phone}</div>
+                                  )}
+                                </div>
+                              </td>
+                              <td className="px-3 sm:px-6 py-4 hidden sm:table-cell">
+                                <span className="px-2 py-1 bg-primary/20 text-primary rounded-full text-xs">
+                                  {message.service}
+                                </span>
+                              </td>
+                              <td className="px-3 sm:px-6 py-4 hidden md:table-cell">
+                                <div className="text-gray-300 text-sm">
+                                  {expandedMessage === message._id ? (
+                                    <div className="whitespace-pre-wrap">{message.message}</div>
+                                  ) : (
+                                    <div className="truncate max-w-md">
+                                      {message.message}
+                                    </div>
+                                  )}
+                                  <button className="text-primary text-xs mt-1 hover:underline">
+                                    {expandedMessage === message._id ? '▲ Show less' : '▼ Show more'}
+                                  </button>
+                                </div>
+                              </td>
+                              <td className="px-3 sm:px-6 py-4">
+                                <select
+                                  value={message.status}
+                                  onChange={(e) => {
+                                    e.stopPropagation()
+                                    handleStatusUpdate(message._id, e.target.value)
+                                  }}
+                                  className={`px-2 py-1 rounded-full text-xs border-0 cursor-hover ${getStatusColor(message.status)}`}
+                                >
+                                  <option value="new">New</option>
+                                  <option value="read">Read</option>
+                                  <option value="replied">Replied</option>
+                                </select>
+                              </td>
+                              <td className="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-400 hidden sm:table-cell">
+                                {new Date(message.createdAt).toLocaleDateString()}
+                              </td>
+                            </motion.tr>
+                          </React.Fragment>
                         ))}
                       </tbody>
                     </table>
