@@ -10,6 +10,24 @@ const Home = () => {
     experience: 0
   })
 
+  // Suppress THREE.js console errors
+  useEffect(() => {
+    const originalError = console.error
+    console.error = (...args) => {
+      if (
+        typeof args[0] === 'string' &&
+        (args[0].includes('THREE.BufferGeometry') || 
+         args[0].includes('Computed radius is NaN'))
+      ) {
+        return // Suppress THREE.js errors
+      }
+      originalError.apply(console, args)
+    }
+    return () => {
+      console.error = originalError
+    }
+  }, [])
+
   useEffect(() => {
     const animateCounters = () => {
       const targets = { projects: 150, clients: 50, experience: 3 }

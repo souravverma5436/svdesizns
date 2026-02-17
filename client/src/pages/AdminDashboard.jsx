@@ -603,11 +603,11 @@ const AdminDashboard = () => {
                         <div className="h-48 bg-gradient-to-br from-primary via-secondary to-accent flex items-center justify-center">
                           {item.imageUrl ? (
                             <img
-                              src={item.imageUrl}
+                              src={`${item.imageUrl}${item.imageUrl.includes('?') ? '&' : '?'}t=${Date.now()}`}
                               alt={item.title}
                               className="w-full h-full object-cover"
                               loading="lazy"
-                              key={item.imageUrl} // Force re-render when image changes
+                              key={`${item._id}-${item.imageUrl}`}
                             />
                           ) : (
                             <span className="text-2xl font-bold text-white opacity-80">

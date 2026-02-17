@@ -44,7 +44,7 @@ const Portfolio = () => {
           title: 'Modern Tech Logo',
           category: 'Logo Design',
           description: 'Clean and modern logo design for a tech startup',
-          imageUrl: 'https://via.placeholder.com/400x300/6366f1/ffffff?text=Tech+Logo',
+          imageUrl: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&h=300&fit=crop',
           tags: ['Logo', 'Branding', 'Tech']
         },
         {
@@ -52,7 +52,7 @@ const Portfolio = () => {
           title: 'Restaurant Branding',
           category: 'Branding',
           description: 'Complete brand identity for a premium restaurant',
-          imageUrl: 'https://via.placeholder.com/400x300/8b5cf6/ffffff?text=Restaurant+Brand',
+          imageUrl: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=300&fit=crop',
           tags: ['Branding', 'Identity', 'Food']
         },
         {
@@ -60,7 +60,7 @@ const Portfolio = () => {
           title: 'Social Media Campaign',
           category: 'Social Media Creatives',
           description: 'Engaging social media graphics for fashion brand',
-          imageUrl: 'https://via.placeholder.com/400x300/06b6d4/ffffff?text=Social+Campaign',
+          imageUrl: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=300&fit=crop',
           tags: ['Social Media', 'Fashion', 'Campaign']
         },
         {
@@ -68,7 +68,7 @@ const Portfolio = () => {
           title: 'Fitness App Logo',
           category: 'Logo Design',
           description: 'Dynamic logo design for fitness application',
-          imageUrl: 'https://via.placeholder.com/400x300/f59e0b/ffffff?text=Fitness+Logo',
+          imageUrl: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=400&h=300&fit=crop',
           tags: ['Logo', 'App', 'Fitness']
         },
         {
@@ -76,7 +76,7 @@ const Portfolio = () => {
           title: 'Coffee Shop Identity',
           category: 'Branding',
           description: 'Warm and inviting brand identity for coffee shop',
-          imageUrl: 'https://via.placeholder.com/400x300/ef4444/ffffff?text=Coffee+Brand',
+          imageUrl: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=300&fit=crop',
           tags: ['Branding', 'Coffee', 'Identity']
         },
         {
@@ -84,7 +84,7 @@ const Portfolio = () => {
           title: 'Instagram Stories',
           category: 'Social Media Creatives',
           description: 'Creative Instagram story templates',
-          imageUrl: 'https://via.placeholder.com/400x300/8b5cf6/ffffff?text=Insta+Stories',
+          imageUrl: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=400&h=300&fit=crop',
           tags: ['Social Media', 'Instagram', 'Templates']
         },
         {
