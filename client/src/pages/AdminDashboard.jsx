@@ -126,6 +126,7 @@ const AdminDashboard = () => {
         description: '',
         category: 'Logo Design',
         imageUrl: '',
+        websiteUrl: '',
         tags: [],
         isActive: true
       })
@@ -134,6 +135,8 @@ const AdminDashboard = () => {
         name: '',
         description: '',
         priceINR: '',
+        imageUrl: '',
+        websiteUrl: '',
         features: [],
         isActive: true
       })
@@ -154,7 +157,8 @@ const AdminDashboard = () => {
       if (modalType === 'portfolio') {
         const portfolioData = {
           ...formData,
-          tags: typeof formData.tags === 'string' ? formData.tags.split(',').map(tag => tag.trim()) : formData.tags
+          tags: typeof formData.tags === 'string' ? formData.tags.split(',').map(tag => tag.trim()) : formData.tags,
+          websiteUrl: formData.websiteUrl || undefined // Only include if provided
         }
         
         if (editingItem) {
@@ -166,10 +170,17 @@ const AdminDashboard = () => {
         }
         fetchPortfolio()
       } else if (modalType === 'service') {
+        // Handle "On Demand" pricing or numeric pricing
+        const priceValue = formData.priceINR === 'On Demand' || formData.priceINR === 'on demand' 
+          ? 'On Demand' 
+          : parseFloat(formData.priceINR)
+        
         const serviceData = {
           ...formData,
-          priceINR: parseFloat(formData.priceINR),
-          features: typeof formData.features === 'string' ? formData.features.split(',').map(feature => feature.trim()) : formData.features
+          priceINR: priceValue,
+          features: typeof formData.features === 'string' ? formData.features.split(',').map(feature => feature.trim()) : formData.features,
+          imageUrl: formData.imageUrl || undefined,
+          websiteUrl: formData.websiteUrl || undefined
         }
         
         if (editingItem) {
@@ -741,6 +752,7 @@ const AdminDashboard = () => {
                           <option value="Branding">Branding</option>
                           <option value="Social Media Creatives">Social Media Creatives</option>
                           <option value="Posters & Ads">Posters & Ads</option>
+                          <option value="Websites">Websites</option>
                         </select>
                       </div>
                       <div>
@@ -750,7 +762,21 @@ const AdminDashboard = () => {
                           value={formData.imageUrl || ''}
                           onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                           className="w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-lg focus:border-primary focus:outline-none"
+                          placeholder="https://example.com/image.jpg or upload to image hosting"
                           required
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Upload image to services like Imgur, Cloudinary, or use direct URL
+                        </p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Website URL (Optional - for Websites category)</label>
+                        <input
+                          type="url"
+                          value={formData.websiteUrl || ''}
+                          onChange={(e) => setFormData({ ...formData, websiteUrl: e.target.value })}
+                          className="w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-lg focus:border-primary focus:outline-none"
+                          placeholder="https://example.com"
                         />
                       </div>
                       <div>
@@ -786,15 +812,37 @@ const AdminDashboard = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">Price (INR)</label>
+                        <label className="block text-sm font-medium mb-2">Price (INR or "On Demand")</label>
                         <input
-                          type="number"
+                          type="text"
                           value={formData.priceINR || ''}
                           onChange={(e) => setFormData({ ...formData, priceINR: e.target.value })}
                           className="w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-lg focus:border-primary focus:outline-none"
-                          min="0"
-                          step="1"
+                          placeholder='Enter number or "On Demand" for websites'
                           required
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Enter a number for fixed pricing or "On Demand" for custom pricing
+                        </p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Image URL (Optional)</label>
+                        <input
+                          type="url"
+                          value={formData.imageUrl || ''}
+                          onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                          className="w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-lg focus:border-primary focus:outline-none"
+                          placeholder="https://example.com/service-image.jpg"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Website URL (Optional - for Websites service)</label>
+                        <input
+                          type="url"
+                          value={formData.websiteUrl || ''}
+                          onChange={(e) => setFormData({ ...formData, websiteUrl: e.target.value })}
+                          className="w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-lg focus:border-primary focus:outline-none"
+                          placeholder="https://example.com"
                         />
                       </div>
                       <div>

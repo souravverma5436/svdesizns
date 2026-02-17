@@ -131,7 +131,7 @@ const contactSchema = new mongoose.Schema({
   service: {
     type: String,
     required: true,
-    enum: ['Logo Design', 'Branding', 'Social Media Creatives', 'Posters & Ads', 'Other']
+    enum: ['Logo Design', 'Branding', 'Social Media Creatives', 'Posters & Ads', 'Websites', 'Other']
   },
   message: {
     type: String,
@@ -169,11 +169,16 @@ const portfolioSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ['Logo Design', 'Branding', 'Social Media Creatives', 'Posters & Ads']
+    enum: ['Logo Design', 'Branding', 'Social Media Creatives', 'Posters & Ads', 'Websites']
   },
   imageUrl: {
     type: String,
     required: true,
+    trim: true
+  },
+  websiteUrl: {
+    type: String,
+    required: false,
     trim: true
   },
   tags: [{
@@ -196,7 +201,7 @@ const portfolioSchema = new mongoose.Schema({
 
 const Portfolio = mongoose.model('Portfolio', portfolioSchema)
 
-// Services Schema (INR pricing only)
+// Services Schema (INR pricing only, with "On Demand" option for websites)
 const serviceSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -211,9 +216,18 @@ const serviceSchema = new mongoose.Schema({
     maxlength: 500
   },
   priceINR: {
-    type: Number,
-    required: true,
-    min: 0
+    type: mongoose.Schema.Types.Mixed, // Can be Number or String ("On Demand")
+    required: true
+  },
+  imageUrl: {
+    type: String,
+    required: false,
+    trim: true
+  },
+  websiteUrl: {
+    type: String,
+    required: false,
+    trim: true
   },
   features: [{
     type: String,

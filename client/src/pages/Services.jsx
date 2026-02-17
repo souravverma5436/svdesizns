@@ -59,7 +59,8 @@ const Services = () => {
       'Logo Design': '🎨',
       'Branding': '🏢',
       'Social Media Creatives': '📱',
-      'Posters & Ads': '📢'
+      'Posters & Ads': '📢',
+      'Websites': '🌐'
     }
     return icons[serviceName] || '✨'
   }
@@ -158,6 +159,31 @@ const Services = () => {
                 <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 group-hover:text-primary transition-colors">
                   {service.name}
                 </h3>
+                
+                {/* Website Link if available */}
+                {service.websiteUrl && (
+                  <a
+                    href={service.websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 mb-3 px-3 py-1 bg-primary/20 text-primary rounded-full text-xs sm:text-sm font-medium hover:bg-primary/30 transition-all cursor-hover"
+                  >
+                    🌐 View Example
+                  </a>
+                )}
+                
+                {/* Service Image if available */}
+                {service.imageUrl && (
+                  <div className="mb-4 rounded-lg overflow-hidden">
+                    <img
+                      src={service.imageUrl}
+                      alt={service.name}
+                      className="w-full h-32 sm:h-40 object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                
                 <p className="text-gray-300 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">
                   {service.description}
                 </p>
@@ -183,10 +209,13 @@ const Services = () => {
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div className="space-y-1">
                     <div className="text-xl sm:text-2xl font-bold text-gradient">
-                      ₹{service.priceINR?.toLocaleString('en-IN') || 'Contact for pricing'}
+                      {typeof service.priceINR === 'string' 
+                        ? service.priceINR 
+                        : `₹${service.priceINR?.toLocaleString('en-IN') || 'Contact for pricing'}`
+                      }
                     </div>
                     <div className="text-sm text-gray-400">
-                      Starting from
+                      {typeof service.priceINR === 'string' ? 'Custom pricing' : 'Starting from'}
                     </div>
                   </div>
                   <motion.button

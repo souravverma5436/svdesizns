@@ -15,7 +15,8 @@ const Portfolio = () => {
     { id: 'Logo Design', name: 'Logo Design' },
     { id: 'Branding', name: 'Branding' },
     { id: 'Social Media Creatives', name: 'Social Media' },
-    { id: 'Posters & Ads', name: 'Posters & Ads' }
+    { id: 'Posters & Ads', name: 'Posters & Ads' },
+    { id: 'Websites', name: 'Websites' }
   ]
 
   useEffect(() => {
@@ -357,6 +358,19 @@ const Portfolio = () => {
                 <h2 className="text-2xl sm:text-3xl font-bold text-gradient mb-3 sm:mb-4">
                   {selectedProject.title}
                 </h2>
+                
+                {/* Website Link for Website category */}
+                {selectedProject.websiteUrl && (
+                  <a
+                    href={selectedProject.websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-gradient-to-r from-primary to-secondary rounded-full text-sm font-medium hover:shadow-lg hover:shadow-primary/25 transition-all cursor-hover"
+                  >
+                    🌐 Visit Website
+                  </a>
+                )}
+                
                 <p className="text-gray-300 text-base sm:text-lg mb-4 sm:mb-6">
                   {selectedProject.description}
                 </p>
