@@ -829,6 +829,36 @@ app.patch('/api/admin/messages/:id/status', authenticateAdmin, async (req, res) 
   }
 })
 
+// Delete message (admin only)
+app.delete('/api/admin/messages/:id', authenticateAdmin, async (req, res) => {
+  try {
+    const { id } = req.params
+
+    const message = await Contact.findByIdAndDelete(id)
+
+    if (!message) {
+      return res.status(404).json({
+        success: false,
+        message: 'Message not found'
+      })
+    }
+
+    console.log(`🗑️ Message deleted: ${message.name} (${message.email})`)
+
+    res.json({
+      success: true,
+      message: 'Message deleted successfully'
+    })
+
+  } catch (error) {
+    console.error('❌ Delete message error:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Server error'
+    })
+  }
+})
+
 // Portfolio API Routes
 
 // Get all portfolio items

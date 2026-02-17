@@ -111,6 +111,22 @@ const AdminDashboard = () => {
     }
   }
 
+  const handleDeleteMessage = async (messageId) => {
+    if (!window.confirm('Are you sure you want to delete this message? This action cannot be undone.')) {
+      return
+    }
+
+    try {
+      await apiClient.deleteMessage(messageId)
+      toast.success('Message deleted successfully')
+      fetchMessages()
+      fetchStats()
+    } catch (error) {
+      console.error('Error deleting message:', error)
+      toast.error('Failed to delete message')
+    }
+  }
+
   const handleLogout = () => {
     localStorage.removeItem('adminToken')
     localStorage.removeItem('adminUser')
@@ -484,6 +500,9 @@ const AdminDashboard = () => {
                           <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider hidden sm:table-cell">
                             Date
                           </th>
+                          <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                            Actions
+                          </th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-700">
@@ -539,6 +558,18 @@ const AdminDashboard = () => {
                               </td>
                               <td className="px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-400 hidden sm:table-cell">
                                 {new Date(message.createdAt).toLocaleDateString()}
+                              </td>
+                              <td className="px-3 sm:px-6 py-4">
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    handleDeleteMessage(message._id)
+                                  }}
+                                  className="text-red-500 hover:text-red-400 transition cursor-hover text-sm"
+                                  title="Delete message"
+                                >
+                                  🗑️
+                                </button>
                               </td>
                             </motion.tr>
                           </React.Fragment>

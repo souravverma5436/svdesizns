@@ -80,6 +80,7 @@ export const apiClient = {
   getStats: () => api.get('/api/admin/stats'),
   getMessages: (params) => api.get('/api/admin/messages', { params }),
   updateMessageStatus: (id, status) => api.patch(`/api/admin/messages/${id}/status`, { status }),
+  deleteMessage: (id) => api.delete(`/api/admin/messages/${id}`),
   
   // Portfolio management (protected)
   getAdminPortfolio: () => api.get('/api/admin/portfolio'),
