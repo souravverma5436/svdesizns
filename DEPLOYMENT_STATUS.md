@@ -3,10 +3,35 @@
 ## ✅ GITHUB DEPLOYMENT SUCCESSFUL
 
 **Repository**: https://github.com/souravverma5436/sourav-portfolio
-**Latest Commit**: `c2c2896` - Add Websites category with full admin support
+**Latest Commit**: `4149962` - Add image upload functionality and website portfolio setup
 **Status**: ✅ **PUSHED SUCCESSFULLY**
 
-## 📦 LATEST UPDATE - WEBSITES FEATURE
+## 📦 LATEST UPDATE - IMAGE UPLOAD & WEBSITE PORTFOLIO
+
+### 📤 **Image Upload Feature**:
+- ✅ Backend image upload endpoint with Multer
+- ✅ Admin can upload images directly (max 5MB)
+- ✅ Toggle between URL and file upload methods
+- ✅ Support for JPG, PNG, GIF, WebP formats
+- ✅ Real-time upload progress indicator
+- ✅ Automatic image URL generation
+- ✅ Static file serving for uploaded images
+- ✅ File validation (type and size)
+
+### 🌐 **Website Portfolio Setup**:
+- ✅ Script to add Spark Soul (https://spark-soul.vercel.app/)
+- ✅ Script to add DogPetel (https://dogpetel.vercel.app/)
+- ✅ Comprehensive guide for adding websites
+- ✅ Instructions for screenshots and uploading
+- ✅ Both automated and manual methods
+
+### 🎨 **Admin Dashboard Enhancements**:
+- ✅ Dual-mode image input (URL or Upload)
+- ✅ Visual feedback during upload
+- ✅ Success indicators and notifications
+- ✅ Improved UX with toggle buttons
+
+## 📦 PREVIOUS UPDATE - WEBSITES FEATURE
 
 ### 🌐 **Websites Category Added**:
 - ✅ Added "Websites" category to portfolio with website URL field
@@ -17,15 +42,6 @@
 - ✅ Enhanced admin dashboard with full CRUD for all new fields
 - ✅ Admin can upload images via URL and add website links
 - ✅ Supports both numeric pricing and "On Demand" text
-
-## 📦 PREVIOUS UPDATE - LOGOUT FIX
-
-### 🔧 **Logout Button Fix**:
-- ✅ Fixed AdminDashboard handleLogout function (removed axios reference)
-- ✅ Added proper toast notification for logout success  
-- ✅ Enhanced Navbar handleLogout with storage event synchronization
-- ✅ Verified complete authentication flow works correctly
-- ✅ Both logout buttons now work properly from admin dashboard and navbar
 
 ## 📦 WHAT WAS DEPLOYED
 
