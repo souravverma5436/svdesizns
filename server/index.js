@@ -164,7 +164,15 @@ const contactSchema = new mongoose.Schema({
     required: false,
     trim: true,
     maxlength: 20,
-    match: [/^[\+]?[0-9\s\-\(\)]{10,20}$/, 'Please enter a valid phone number']
+    validate: {
+      validator: function(v) {
+        // Allow empty string or null
+        if (!v || v === '') return true;
+        // Otherwise validate phone format
+        return /^[\+]?[0-9\s\-\(\)]{10,20}$/.test(v);
+      },
+      message: 'Please enter a valid phone number'
+    }
   },
   service: {
     type: String,
@@ -483,13 +491,22 @@ const validateContact = [
     .normalizeEmail()
     .withMessage('Please enter a valid email address'),
   body('phone')
-    .optional({ checkFalsy: true })
+    .optional({ checkFalsy: true, nullable: true })
     .trim()
-    .isLength({ min: 10, max: 20 })
-    .matches(/^[\+]?[0-9\s\-\(\)]{10,20}$/)
-    .withMessage('Please enter a valid phone number (10-20 digits)'),
+    .custom((value) => {
+      // If empty or not provided, it's valid
+      if (!value || value === '') return true;
+      // Otherwise check length and format
+      if (value.length < 10 || value.length > 20) {
+        throw new Error('Phone number must be between 10 and 20 characters');
+      }
+      if (!/^[\+]?[0-9\s\-\(\)]{10,20}$/.test(value)) {
+        throw new Error('Please enter a valid phone number');
+      }
+      return true;
+    }),
   body('service')
-    .isIn(['Logo Design', 'Branding', 'Social Media Creatives', 'Posters & Ads', 'Other'])
+    .isIn(['Logo Design', 'Branding', 'Social Media Creatives', 'Posters & Ads', 'Websites', 'Other'])
     .withMessage('Please select a valid service'),
   body('message')
     .trim()

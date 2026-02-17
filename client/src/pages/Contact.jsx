@@ -89,8 +89,14 @@ const Contact = () => {
       }
     } catch (error) {
       console.error('❌ Contact Error:', error)
+      console.error('❌ Validation Errors:', error.response?.data?.errors)
 
-      if (error.response?.data?.message) {
+      if (error.response?.data?.errors) {
+        // Show specific validation errors
+        error.response.data.errors.forEach(err => {
+          toast.error(`${err.path}: ${err.msg}`)
+        })
+      } else if (error.response?.data?.message) {
         toast.error(error.response.data.message)
       } else {
         toast.error('Server not responding. Please try again later.')
