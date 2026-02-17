@@ -510,8 +510,8 @@ const validateContact = [
     .withMessage('Please select a valid service'),
   body('message')
     .trim()
-    .isLength({ min: 10, max: 1000 })
-    .withMessage('Message must be between 10 and 1000 characters')
+    .isLength({ min: 1, max: 1000 })
+    .withMessage('Message is required and must not exceed 1000 characters')
 ]
 
 // Routes

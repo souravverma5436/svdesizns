@@ -508,7 +508,7 @@ const AdminDashboard = () => {
                               </span>
                             </td>
                             <td className="px-3 sm:px-6 py-4 hidden md:table-cell">
-                              <div className="max-w-xs truncate text-gray-300 text-sm">
+                              <div className="max-w-md text-gray-300 text-sm break-words">
                                 {message.message}
                               </div>
                             </td>
