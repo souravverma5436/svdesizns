@@ -734,7 +734,14 @@ const AdminDashboard = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         whileHover={{ scale: 1.02 }}
                       >
-                        <h3 className="font-semibold mb-2 text-lg">{service.name}</h3>
+                        <div className="flex justify-between items-start mb-2">
+                          <h3 className="font-semibold text-lg">{service.name}</h3>
+                          {service.category && (
+                            <span className="px-2 py-1 bg-primary/20 text-primary rounded-full text-xs">
+                              {service.category}
+                            </span>
+                          )}
+                        </div>
                         <p className="text-gray-400 text-sm mb-3 line-clamp-2">{service.description}</p>
                         <div className="mb-3">
                           <span className="text-xl font-bold text-gradient">
@@ -956,6 +963,21 @@ const AdminDashboard = () => {
                           className="w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-lg focus:border-primary focus:outline-none"
                           required
                         />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Category</label>
+                        <select
+                          value={formData.category || 'Other'}
+                          onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                          className="w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-lg focus:border-primary focus:outline-none"
+                        >
+                          <option value="Logo Design">Logo Design</option>
+                          <option value="Branding">Branding</option>
+                          <option value="Social Media Creatives">Social Media Creatives</option>
+                          <option value="Posters & Ads">Posters & Ads</option>
+                          <option value="Websites">Websites</option>
+                          <option value="Other">Other</option>
+                        </select>
                       </div>
                       <div>
                         <label className="block text-sm font-medium mb-2">Description</label>

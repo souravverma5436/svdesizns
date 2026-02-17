@@ -255,6 +255,12 @@ const serviceSchema = new mongoose.Schema({
     trim: true,
     maxlength: 100
   },
+  category: {
+    type: String,
+    required: false,
+    enum: ['Logo Design', 'Branding', 'Social Media Creatives', 'Posters & Ads', 'Websites', 'Other'],
+    default: 'Other'
+  },
   description: {
     type: String,
     required: true,
