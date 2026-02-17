@@ -845,7 +845,7 @@ const AdminDashboard = () => {
                               onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                               className="w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-lg focus:border-primary focus:outline-none"
                               placeholder="https://example.com/image.jpg"
-                              required
+                              required={!editingItem}
                             />
                             <p className="text-xs text-gray-500 mt-1">
                               Paste image URL from Imgur, Cloudinary, or any image hosting service
