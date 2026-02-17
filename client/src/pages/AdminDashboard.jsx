@@ -22,6 +22,8 @@ const AdminDashboard = () => {
   const [modalType, setModalType] = useState('') // 'portfolio' or 'service'
   const [editingItem, setEditingItem] = useState(null)
   const [formData, setFormData] = useState({})
+  const [uploadingImage, setUploadingImage] = useState(false)
+  const [imageUploadMethod, setImageUploadMethod] = useState('url') // 'url' or 'upload'
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -117,9 +119,45 @@ const AdminDashboard = () => {
     navigate('/')
   }
 
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select an image file')
+      return
+    }
+
+    // Validate file size (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image size should be less than 5MB')
+      return
+    }
+
+    try {
+      setUploadingImage(true)
+      const formDataToUpload = new FormData()
+      formDataToUpload.append('image', file)
+
+      const response = await apiClient.uploadImage(formDataToUpload)
+      
+      if (response.data.success) {
+        setFormData({ ...formData, imageUrl: response.data.data.imageUrl })
+        toast.success('Image uploaded successfully!')
+      }
+    } catch (error) {
+      console.error('Image upload error:', error)
+      toast.error('Failed to upload image')
+    } finally {
+      setUploadingImage(false)
+    }
+  }
+
   const openModal = (type, item = null) => {
     setModalType(type)
     setEditingItem(item)
+    setImageUploadMethod('url') // Reset to URL method
     if (type === 'portfolio') {
       setFormData(item || {
         title: '',
@@ -756,18 +794,74 @@ const AdminDashboard = () => {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">Image URL</label>
-                        <input
-                          type="url"
-                          value={formData.imageUrl || ''}
-                          onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                          className="w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-lg focus:border-primary focus:outline-none"
-                          placeholder="https://example.com/image.jpg or upload to image hosting"
-                          required
-                        />
-                        <p className="text-xs text-gray-500 mt-1">
-                          Upload image to services like Imgur, Cloudinary, or use direct URL
-                        </p>
+                        <label className="block text-sm font-medium mb-2">Image</label>
+                        
+                        {/* Toggle between URL and Upload */}
+                        <div className="flex gap-2 mb-3">
+                          <button
+                            type="button"
+                            onClick={() => setImageUploadMethod('url')}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                              imageUploadMethod === 'url'
+                                ? 'bg-primary text-white'
+                                : 'bg-dark-lighter text-gray-400 hover:text-white'
+                            }`}
+                          >
+                            🔗 Image URL
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setImageUploadMethod('upload')}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                              imageUploadMethod === 'upload'
+                                ? 'bg-primary text-white'
+                                : 'bg-dark-lighter text-gray-400 hover:text-white'
+                            }`}
+                          >
+                            📤 Upload Image
+                          </button>
+                        </div>
+
+                        {imageUploadMethod === 'url' ? (
+                          <>
+                            <input
+                              type="url"
+                              value={formData.imageUrl || ''}
+                              onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                              className="w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-lg focus:border-primary focus:outline-none"
+                              placeholder="https://example.com/image.jpg"
+                              required
+                            />
+                            <p className="text-xs text-gray-500 mt-1">
+                              Paste image URL from Imgur, Cloudinary, or any image hosting service
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <div className="relative">
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                                className="w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-lg focus:border-primary focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/80 cursor-pointer"
+                                disabled={uploadingImage}
+                              />
+                              {uploadingImage && (
+                                <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                                  <div className="animate-spin w-5 h-5 border-2 border-primary border-t-transparent rounded-full"></div>
+                                </div>
+                              )}
+                            </div>
+                            <p className="text-xs text-gray-500 mt-1">
+                              Upload image (max 5MB) - JPG, PNG, GIF, WebP
+                            </p>
+                            {formData.imageUrl && (
+                              <div className="mt-2 p-2 bg-green-500/10 border border-green-500/30 rounded-lg">
+                                <p className="text-xs text-green-400">✓ Image uploaded successfully</p>
+                              </div>
+                            )}
+                          </>
+                        )}
                       </div>
                       <div>
                         <label className="block text-sm font-medium mb-2">Website URL (Optional - for Websites category)</label>

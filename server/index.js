@@ -5,6 +5,9 @@ const helmet = require('helmet')
 const { body, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
+const multer = require('multer')
+const path = require('path')
+const fs = require('fs')
 require('dotenv').config()
 
 const app = express()
@@ -35,6 +38,41 @@ app.use(helmet({
 app.use(cors(corsOptions))
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true }))
+
+// Serve uploaded files statically
+const uploadsDir = path.join(__dirname, 'uploads')
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true })
+}
+app.use('/uploads', express.static(uploadsDir))
+
+// Multer configuration for image uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadsDir)
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, 'portfolio-' + uniqueSuffix + path.extname(file.originalname))
+  }
+})
+
+const fileFilter = (req, file, cb) => {
+  // Accept images only
+  if (file.mimetype.startsWith('image/')) {
+    cb(null, true)
+  } else {
+    cb(new Error('Only image files are allowed!'), false)
+  }
+}
+
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB limit
+  }
+})
 
 // Handle preflight requests
 app.options('*', cors(corsOptions))
@@ -482,6 +520,38 @@ app.get('/api/health', (req, res) => {
     environment: process.env.NODE_ENV || 'development',
     port: PORT
   })
+})
+
+// Image upload endpoint (admin only)
+app.post('/api/admin/upload', authenticateAdmin, upload.single('image'), (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: 'No image file provided'
+      })
+    }
+
+    // Generate the URL for the uploaded image
+    const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
+
+    res.json({
+      success: true,
+      message: 'Image uploaded successfully',
+      data: {
+        filename: req.file.filename,
+        imageUrl: imageUrl,
+        size: req.file.size
+      }
+    })
+  } catch (error) {
+    console.error('Upload error:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Failed to upload image',
+      error: error.message
+    })
+  }
 })
 
 // Submit contact form

@@ -91,7 +91,14 @@ export const apiClient = {
   getAdminServices: () => api.get('/api/admin/services'),
   createService: (data) => api.post('/api/admin/services', data),
   updateService: (id, data) => api.put(`/api/admin/services/${id}`, data),
-  deleteService: (id) => api.delete(`/api/admin/services/${id}`)
+  deleteService: (id) => api.delete(`/api/admin/services/${id}`),
+  
+  // Image upload (protected)
+  uploadImage: (formData) => api.post('/api/admin/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
 }
 
 export default api
