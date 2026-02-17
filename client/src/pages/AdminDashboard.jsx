@@ -143,7 +143,12 @@ const AdminDashboard = () => {
       const response = await apiClient.uploadImage(formDataToUpload)
       
       if (response.data.success) {
-        setFormData({ ...formData, imageUrl: response.data.data.imageUrl })
+        // Update formData with new image URL
+        const newImageUrl = response.data.data.imageUrl
+        setFormData(prevData => ({ 
+          ...prevData, 
+          imageUrl: newImageUrl 
+        }))
         toast.success('Image uploaded successfully!')
       }
     } catch (error) {
@@ -206,7 +211,12 @@ const AdminDashboard = () => {
           await apiClient.createPortfolio(portfolioData)
           toast.success('Portfolio item created successfully')
         }
-        fetchPortfolio()
+        
+        // Close modal first
+        closeModal()
+        
+        // Then refresh portfolio list
+        await fetchPortfolio()
       } else if (modalType === 'service') {
         // Handle "On Demand" pricing or numeric pricing
         const priceValue = formData.priceINR === 'On Demand' || formData.priceINR === 'on demand' 
@@ -228,9 +238,13 @@ const AdminDashboard = () => {
           await apiClient.createService(serviceData)
           toast.success('Service created successfully')
         }
-        fetchServices()
+        
+        // Close modal first
+        closeModal()
+        
+        // Then refresh services list
+        await fetchServices()
       }
-      closeModal()
     } catch (error) {
       console.error('Error saving item:', error)
       toast.error('Failed to save item')
@@ -593,6 +607,7 @@ const AdminDashboard = () => {
                               alt={item.title}
                               className="w-full h-full object-cover"
                               loading="lazy"
+                              key={item.imageUrl} // Force re-render when image changes
                             />
                           ) : (
                             <span className="text-2xl font-bold text-white opacity-80">
