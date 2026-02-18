@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { brandAnimations, viewportAnimations, animationUtils } from '../utils/animations'
+import { apiClient } from '../utils/api'
 
 const Home = () => {
   const [counters, setCounters] = useState({
@@ -9,6 +10,27 @@ const Home = () => {
     clients: 0,
     experience: 0
   })
+  const [featuredProjects, setFeaturedProjects] = useState([])
+
+  // Fetch featured projects (2 websites + 1 poster)
+  useEffect(() => {
+    const fetchFeaturedProjects = async () => {
+      try {
+        const response = await apiClient.getPortfolio()
+        const allProjects = response.data.data || []
+        
+        // Get 2 websites and 1 poster
+        const websites = allProjects.filter(p => p.category === 'Websites').slice(0, 2)
+        const posters = allProjects.filter(p => p.category === 'Posters & Ads').slice(0, 1)
+        
+        setFeaturedProjects([...websites, ...posters])
+      } catch (error) {
+        console.error('Error fetching featured projects:', error)
+      }
+    }
+    
+    fetchFeaturedProjects()
+  }, [])
 
   // Suppress THREE.js console errors
   useEffect(() => {
@@ -209,23 +231,66 @@ const Home = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {[1, 2, 3].map((item) => (
-              <motion.div
-                key={item}
-                className="glass rounded-xl sm:rounded-2xl overflow-hidden card-hover cursor-hover"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: item * 0.2, duration: 0.8 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -10 }}
-              >
-                <div className="h-48 sm:h-56 lg:h-64 bg-gradient-to-br from-primary to-secondary opacity-80" />
-                <div className="p-4 sm:p-6">
-                  <h3 className="text-lg sm:text-xl font-semibold mb-2">Project {item}</h3>
-                  <p className="text-gray-400 text-sm sm:text-base">Creative design solution</p>
-                </div>
-              </motion.div>
-            ))}
+            {featuredProjects.length > 0 ? (
+              featuredProjects.map((project, index) => (
+                <motion.div
+                  key={project._id}
+                  className="glass rounded-xl sm:rounded-2xl overflow-hidden card-hover cursor-hover"
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.2, duration: 0.8 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -10 }}
+                >
+                  <div className="h-48 sm:h-56 lg:h-64 overflow-hidden">
+                    <img
+                      src={project.imageUrl}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="p-4 sm:p-6">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="text-lg sm:text-xl font-semibold">{project.title}</h3>
+                      <span className="px-2 py-1 bg-primary/20 text-primary rounded-full text-xs">
+                        {project.category}
+                      </span>
+                    </div>
+                    <p className="text-gray-400 text-sm sm:text-base line-clamp-2">{project.description}</p>
+                    {project.websiteUrl && (
+                      <a
+                        href={project.websiteUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block mt-3 text-primary hover:text-secondary transition text-sm"
+                      >
+                        Visit Website →
+                      </a>
+                    )}
+                  </div>
+                </motion.div>
+              ))
+            ) : (
+              // Fallback placeholders while loading
+              [1, 2, 3].map((item) => (
+                <motion.div
+                  key={item}
+                  className="glass rounded-xl sm:rounded-2xl overflow-hidden card-hover cursor-hover"
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: item * 0.2, duration: 0.8 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -10 }}
+                >
+                  <div className="h-48 sm:h-56 lg:h-64 bg-gradient-to-br from-primary to-secondary opacity-80 animate-pulse" />
+                  <div className="p-4 sm:p-6">
+                    <div className="h-6 bg-gray-700 rounded mb-2 animate-pulse" />
+                    <div className="h-4 bg-gray-700 rounded animate-pulse" />
+                  </div>
+                </motion.div>
+              ))
+            )}
           </div>
 
           <motion.div
