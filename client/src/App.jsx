@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import CustomCursor from './components/CustomCursor'
 import ParticleBackground from './components/ParticleBackground'
 import Home from './pages/Home'
@@ -24,30 +25,35 @@ function App() {
             <>
               <Navbar />
               <Home />
+              <Footer />
             </>
           } />
           <Route path="/about" element={
             <>
               <Navbar />
               <About />
+              <Footer />
             </>
           } />
           <Route path="/portfolio" element={
             <>
               <Navbar />
               <Portfolio />
+              <Footer />
             </>
           } />
           <Route path="/services" element={
             <>
               <Navbar />
               <Services />
+              <Footer />
             </>
           } />
           <Route path="/contact" element={
             <>
               <Navbar />
               <Contact />
+              <Footer />
             </>
           } />
           
