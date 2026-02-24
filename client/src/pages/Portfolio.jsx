@@ -26,12 +26,30 @@ const Portfolio = () => {
   const fetchPortfolioItems = async () => {
     try {
       setLoading(true)
+      
+      // Check cache first
+      const cached = sessionStorage.getItem('portfolioItems')
+      const cacheTime = sessionStorage.getItem('portfolioItemsTime')
+      const now = Date.now()
+      
+      // Use cache if less than 5 minutes old
+      if (cached && cacheTime && (now - parseInt(cacheTime)) < 300000) {
+        setProjects(JSON.parse(cached))
+        setLoading(false)
+        return
+      }
+      
       const response = await apiClient.getPortfolio()
-      setProjects(response.data.data || [])
+      const portfolioData = response.data.data || []
+      setProjects(portfolioData)
+      
+      // Cache the data
+      sessionStorage.setItem('portfolioItems', JSON.stringify(portfolioData))
+      sessionStorage.setItem('portfolioItemsTime', now.toString())
       
       // Initialize image loading states
       const loadingStates = {}
-      response.data.data?.forEach(project => {
+      portfolioData.forEach(project => {
         loadingStates[project._id] = true
       })
       setImageLoadingStates(loadingStates)

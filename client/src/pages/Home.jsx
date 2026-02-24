@@ -12,10 +12,17 @@ const Home = () => {
   })
   const [featuredProjects, setFeaturedProjects] = useState([])
 
-  // Fetch featured projects (2 websites + 1 poster)
+  // Fetch featured projects (2 websites + 1 poster) with caching
   useEffect(() => {
     const fetchFeaturedProjects = async () => {
       try {
+        // Check cache first
+        const cached = sessionStorage.getItem('featuredProjects')
+        if (cached) {
+          setFeaturedProjects(JSON.parse(cached))
+          return
+        }
+
         const response = await apiClient.getPortfolio()
         const allProjects = response.data.data || []
         
@@ -23,7 +30,11 @@ const Home = () => {
         const websites = allProjects.filter(p => p.category === 'Websites').slice(0, 2)
         const posters = allProjects.filter(p => p.category === 'Posters & Ads').slice(0, 1)
         
-        setFeaturedProjects([...websites, ...posters])
+        const featured = [...websites, ...posters]
+        setFeaturedProjects(featured)
+        
+        // Cache for session
+        sessionStorage.setItem('featuredProjects', JSON.stringify(featured))
       } catch (error) {
         console.error('Error fetching featured projects:', error)
       }
@@ -53,8 +64,8 @@ const Home = () => {
   useEffect(() => {
     const animateCounters = () => {
       const targets = { projects: 150, clients: 50, experience: 3 }
-      const duration = 2000
-      const steps = 60
+      const duration = 1000 // Reduced from 2000ms to 1000ms
+      const steps = 40 // Reduced from 60 to 40
       const stepTime = duration / steps
 
       let currentStep = 0
@@ -75,7 +86,7 @@ const Home = () => {
       }, stepTime)
     }
 
-    const timer = setTimeout(animateCounters, 1000)
+    const timer = setTimeout(animateCounters, 500) // Reduced from 1000ms to 500ms
     return () => clearTimeout(timer)
   }, [])
 
@@ -97,7 +108,7 @@ const Home = () => {
             <motion.h1
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 leading-tight"
               {...brandAnimations.textReveal}
-              transition={{ delay: 0.2, duration: 0.8 }}
+              transition={{ delay: 0.1, duration: 0.5 }}
             >
               <span className="text-white">Hi, I'm </span>
               <br className="sm:hidden" />
@@ -107,7 +118,7 @@ const Home = () => {
             <motion.p
               className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto px-4 leading-relaxed"
               {...brandAnimations.textReveal}
-              transition={{ delay: 0.4, duration: 0.8 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
             >
               Creative Graphic Designer & Visual Storyteller
             </motion.p>
@@ -116,7 +127,7 @@ const Home = () => {
               className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
             >
               <motion.button
                 onClick={() => scrollToSection('portfolio')}
@@ -238,16 +249,17 @@ const Home = () => {
                   className="glass rounded-xl sm:rounded-2xl overflow-hidden card-hover cursor-hover"
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2, duration: 0.8 }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
                   viewport={{ once: true }}
                   whileHover={{ y: -10 }}
                 >
-                  <div className="h-48 sm:h-56 lg:h-64 overflow-hidden">
+                  <div className="h-48 sm:h-56 lg:h-64 overflow-hidden bg-gray-800">
                     <img
                       src={project.imageUrl}
                       alt={project.title}
                       className="w-full h-full object-cover"
                       loading="lazy"
+                      decoding="async"
                     />
                   </div>
                   <div className="p-4 sm:p-6">
