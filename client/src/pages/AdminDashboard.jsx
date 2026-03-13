@@ -160,8 +160,8 @@ const AdminDashboard = () => {
       const response = await apiClient.uploadImage(formDataToUpload)
       
       if (response.data.success) {
-        // Update formData with new image URL + cache buster
-        const newImageUrl = response.data.data.imageUrl + '?t=' + Date.now()
+        // Update formData with new image URL (without cache buster in database)
+        const newImageUrl = response.data.data.imageUrl
         setFormData(prevData => ({ 
           ...prevData, 
           imageUrl: newImageUrl 
@@ -218,11 +218,15 @@ const AdminDashboard = () => {
         const portfolioData = {
           ...formData,
           tags: typeof formData.tags === 'string' ? formData.tags.split(',').map(tag => tag.trim()) : formData.tags,
-          websiteUrl: formData.websiteUrl || undefined // Only include if provided
+          websiteUrl: formData.websiteUrl || undefined, // Only include if provided
+          imageUrl: formData.imageUrl // Always include imageUrl
         }
         
+        console.log('📤 Submitting portfolio data:', portfolioData)
+        
         if (editingItem) {
-          await apiClient.updatePortfolio(editingItem._id, portfolioData)
+          const response = await apiClient.updatePortfolio(editingItem._id, portfolioData)
+          console.log('✅ Update response:', response.data)
           toast.success('Portfolio item updated successfully')
         } else {
           await apiClient.createPortfolio(portfolioData)

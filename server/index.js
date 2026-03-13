@@ -963,6 +963,7 @@ app.put('/api/admin/portfolio/:id', authenticateAdmin, [
   try {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
+      console.log('❌ Validation errors:', errors.array())
       return res.status(400).json({
         success: false,
         message: 'Validation failed',
@@ -973,6 +974,9 @@ app.put('/api/admin/portfolio/:id', authenticateAdmin, [
     const { id } = req.params
     const { title, description, category, imageUrl, websiteUrl, tags, isActive } = req.body
 
+    console.log('📝 Updating portfolio item:', id)
+    console.log('📸 New imageUrl:', imageUrl)
+
     // Get existing item to preserve imageUrl if not provided
     const existingItem = await Portfolio.findById(id)
     if (!existingItem) {
@@ -981,6 +985,8 @@ app.put('/api/admin/portfolio/:id', authenticateAdmin, [
         message: 'Portfolio item not found'
       })
     }
+
+    console.log('📸 Existing imageUrl:', existingItem.imageUrl)
 
     const updatedItem = await Portfolio.findByIdAndUpdate(
       id,
@@ -996,6 +1002,8 @@ app.put('/api/admin/portfolio/:id', authenticateAdmin, [
       },
       { new: true }
     )
+
+    console.log('✅ Updated imageUrl:', updatedItem.imageUrl)
 
     res.json({
       success: true,
