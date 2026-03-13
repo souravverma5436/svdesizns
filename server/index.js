@@ -133,13 +133,9 @@ const connectDB = async () => {
       console.error('💡 Verify credentials and network access in MongoDB Atlas')
     }
     
-    // In production, don't exit immediately - allow server to start
-    if (process.env.NODE_ENV === 'production') {
-      console.log('⚠️ Starting server without database connection - will retry...')
-      // Don't exit in production, let the server start
-    } else {
-      process.exit(1);
-    }
+    // Allow server to start without database connection
+    console.log('⚠️ Starting server without database connection - will retry...')
+    // Don't exit, let the server start and retry connection later
   }
 };
 
