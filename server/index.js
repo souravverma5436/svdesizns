@@ -915,7 +915,7 @@ app.post('/api/admin/portfolio', authenticateAdmin, [
   body('title').trim().isLength({ min: 1, max: 100 }).withMessage('Title is required and must be less than 100 characters'),
   body('description').trim().isLength({ min: 1, max: 500 }).withMessage('Description is required and must be less than 500 characters'),
   body('category').isIn(['Logo Design', 'Branding', 'Social Media Creatives', 'Posters & Ads', 'Websites']).withMessage('Invalid category'),
-  body('imageUrl').optional().trim().withMessage('Image URL must be provided'),
+  body('imageUrl').optional().trim(),
   body('websiteUrl').optional().trim().isURL().withMessage('Website URL must be valid if provided'),
   body('tags').optional().isArray().withMessage('Tags must be an array')
 ], async (req, res) => {
@@ -961,7 +961,7 @@ app.put('/api/admin/portfolio/:id', authenticateAdmin, [
   body('title').trim().isLength({ min: 1, max: 100 }).withMessage('Title is required and must be less than 100 characters'),
   body('description').trim().isLength({ min: 1, max: 500 }).withMessage('Description is required and must be less than 500 characters'),
   body('category').isIn(['Logo Design', 'Branding', 'Social Media Creatives', 'Posters & Ads', 'Websites']).withMessage('Invalid category'),
-  body('imageUrl').optional().trim().withMessage('Image URL must be provided'),
+  body('imageUrl').optional().trim(),
   body('websiteUrl').optional().trim().isURL().withMessage('Website URL must be valid if provided'),
   body('tags').optional().isArray().withMessage('Tags must be an array')
 ], async (req, res) => {
