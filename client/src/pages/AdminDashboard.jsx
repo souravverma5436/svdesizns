@@ -229,6 +229,11 @@ const AdminDashboard = () => {
           toast.success('Portfolio item created successfully')
         }
         
+        // Clear cache to force refresh
+        sessionStorage.removeItem('portfolioItems')
+        sessionStorage.removeItem('portfolioItemsTime')
+        sessionStorage.removeItem('featuredProjects')
+        
         // Close modal first
         closeModal()
         

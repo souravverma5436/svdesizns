@@ -955,8 +955,9 @@ app.post('/api/admin/portfolio', authenticateAdmin, [
 app.put('/api/admin/portfolio/:id', authenticateAdmin, [
   body('title').trim().isLength({ min: 1, max: 100 }).withMessage('Title is required and must be less than 100 characters'),
   body('description').trim().isLength({ min: 1, max: 500 }).withMessage('Description is required and must be less than 500 characters'),
-  body('category').isIn(['Logo Design', 'Branding', 'Social Media Creatives', 'Posters & Ads']).withMessage('Invalid category'),
-  body('imageUrl').trim().isURL().withMessage('Valid image URL is required'),
+  body('category').isIn(['Logo Design', 'Branding', 'Social Media Creatives', 'Posters & Ads', 'Websites']).withMessage('Invalid category'),
+  body('imageUrl').optional().trim().isURL().withMessage('Image URL must be valid if provided'),
+  body('websiteUrl').optional().trim().isURL().withMessage('Website URL must be valid if provided'),
   body('tags').optional().isArray().withMessage('Tags must be an array')
 ], async (req, res) => {
   try {
@@ -970,7 +971,16 @@ app.put('/api/admin/portfolio/:id', authenticateAdmin, [
     }
 
     const { id } = req.params
-    const { title, description, category, imageUrl, tags, isActive } = req.body
+    const { title, description, category, imageUrl, websiteUrl, tags, isActive } = req.body
+
+    // Get existing item to preserve imageUrl if not provided
+    const existingItem = await Portfolio.findById(id)
+    if (!existingItem) {
+      return res.status(404).json({
+        success: false,
+        message: 'Portfolio item not found'
+      })
+    }
 
     const updatedItem = await Portfolio.findByIdAndUpdate(
       id,
@@ -978,20 +988,14 @@ app.put('/api/admin/portfolio/:id', authenticateAdmin, [
         title,
         description,
         category,
-        imageUrl,
+        imageUrl: imageUrl || existingItem.imageUrl, // Preserve existing if not provided
+        websiteUrl: websiteUrl || existingItem.websiteUrl,
         tags: tags || [],
         isActive: isActive !== undefined ? isActive : true,
         updatedAt: new Date()
       },
       { new: true }
     )
-
-    if (!updatedItem) {
-      return res.status(404).json({
-        success: false,
-        message: 'Portfolio item not found'
-      })
-    }
 
     res.json({
       success: true,
