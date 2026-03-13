@@ -198,7 +198,7 @@ const contactSchema = new mongoose.Schema({
 
 const Contact = mongoose.model('Contact', contactSchema)
 
-// Portfolio Schema
+// Portfolio Schema with Base64 image storage
 const portfolioSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -219,8 +219,16 @@ const portfolioSchema = new mongoose.Schema({
   },
   imageUrl: {
     type: String,
-    required: true,
+    required: false,
     trim: true
+  },
+  imageData: {
+    type: String, // Base64 encoded image
+    required: false
+  },
+  imageType: {
+    type: String, // MIME type (image/jpeg, image/png, etc.)
+    required: false
   },
   websiteUrl: {
     type: String,
@@ -546,7 +554,8 @@ app.get('/api/health', (req, res) => {
 })
 
 // Image upload endpoint (admin only)
-app.post('/api/admin/upload', authenticateAdmin, upload.single('image'), (req, res) => {
+// Image upload endpoint (admin only) - Store as Base64 in MongoDB
+app.post('/api/admin/upload', authenticateAdmin, upload.single('image'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({
@@ -555,15 +564,22 @@ app.post('/api/admin/upload', authenticateAdmin, upload.single('image'), (req, r
       })
     }
 
-    // Generate the URL for the uploaded image
-    const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
+    // Convert image to Base64
+    const fs = require('fs')
+    const imageBuffer = fs.readFileSync(req.file.path)
+    const base64Image = imageBuffer.toString('base64')
+    const imageDataUrl = `data:${req.file.mimetype};base64,${base64Image}`
+
+    // Delete the temporary file
+    fs.unlinkSync(req.file.path)
 
     res.json({
       success: true,
       message: 'Image uploaded successfully',
       data: {
-        filename: req.file.filename,
-        imageUrl: imageUrl,
+        imageData: base64Image,
+        imageType: req.file.mimetype,
+        imageDataUrl: imageDataUrl, // Full data URL for immediate display
         size: req.file.size
       }
     })
@@ -911,8 +927,11 @@ app.get('/api/admin/portfolio', authenticateAdmin, async (req, res) => {
 app.post('/api/admin/portfolio', authenticateAdmin, [
   body('title').trim().isLength({ min: 1, max: 100 }).withMessage('Title is required and must be less than 100 characters'),
   body('description').trim().isLength({ min: 1, max: 500 }).withMessage('Description is required and must be less than 500 characters'),
-  body('category').isIn(['Logo Design', 'Branding', 'Social Media Creatives', 'Posters & Ads']).withMessage('Invalid category'),
-  body('imageUrl').trim().isURL().withMessage('Valid image URL is required'),
+  body('category').isIn(['Logo Design', 'Branding', 'Social Media Creatives', 'Posters & Ads', 'Websites']).withMessage('Invalid category'),
+  body('imageUrl').optional().trim().isURL().withMessage('Image URL must be valid if provided'),
+  body('imageData').optional().isString().withMessage('Image data must be a string'),
+  body('imageType').optional().isString().withMessage('Image type must be a string'),
+  body('websiteUrl').optional().trim().isURL().withMessage('Website URL must be valid if provided'),
   body('tags').optional().isArray().withMessage('Tags must be an array')
 ], async (req, res) => {
   try {
@@ -925,13 +944,16 @@ app.post('/api/admin/portfolio', authenticateAdmin, [
       })
     }
 
-    const { title, description, category, imageUrl, tags } = req.body
+    const { title, description, category, imageUrl, imageData, imageType, websiteUrl, tags } = req.body
 
     const newPortfolioItem = new Portfolio({
       title,
       description,
       category,
-      imageUrl,
+      imageUrl: imageUrl || undefined,
+      imageData: imageData || undefined,
+      imageType: imageType || undefined,
+      websiteUrl: websiteUrl || undefined,
       tags: tags || []
     })
 
@@ -957,6 +979,8 @@ app.put('/api/admin/portfolio/:id', authenticateAdmin, [
   body('description').trim().isLength({ min: 1, max: 500 }).withMessage('Description is required and must be less than 500 characters'),
   body('category').isIn(['Logo Design', 'Branding', 'Social Media Creatives', 'Posters & Ads', 'Websites']).withMessage('Invalid category'),
   body('imageUrl').optional().trim().isURL().withMessage('Image URL must be valid if provided'),
+  body('imageData').optional().isString().withMessage('Image data must be a string'),
+  body('imageType').optional().isString().withMessage('Image type must be a string'),
   body('websiteUrl').optional().trim().isURL().withMessage('Website URL must be valid if provided'),
   body('tags').optional().isArray().withMessage('Tags must be an array')
 ], async (req, res) => {
@@ -972,12 +996,13 @@ app.put('/api/admin/portfolio/:id', authenticateAdmin, [
     }
 
     const { id } = req.params
-    const { title, description, category, imageUrl, websiteUrl, tags, isActive } = req.body
+    const { title, description, category, imageUrl, imageData, imageType, websiteUrl, tags, isActive } = req.body
 
     console.log('📝 Updating portfolio item:', id)
+    console.log('📸 New imageData length:', imageData ? imageData.length : 0)
     console.log('📸 New imageUrl:', imageUrl)
 
-    // Get existing item to preserve imageUrl if not provided
+    // Get existing item
     const existingItem = await Portfolio.findById(id)
     if (!existingItem) {
       return res.status(404).json({
@@ -986,15 +1011,15 @@ app.put('/api/admin/portfolio/:id', authenticateAdmin, [
       })
     }
 
-    console.log('📸 Existing imageUrl:', existingItem.imageUrl)
-
     const updatedItem = await Portfolio.findByIdAndUpdate(
       id,
       {
         title,
         description,
         category,
-        imageUrl: imageUrl || existingItem.imageUrl, // Preserve existing if not provided
+        imageUrl: imageUrl || existingItem.imageUrl,
+        imageData: imageData || existingItem.imageData,
+        imageType: imageType || existingItem.imageType,
         websiteUrl: websiteUrl || existingItem.websiteUrl,
         tags: tags || [],
         isActive: isActive !== undefined ? isActive : true,
@@ -1003,7 +1028,7 @@ app.put('/api/admin/portfolio/:id', authenticateAdmin, [
       { new: true }
     )
 
-    console.log('✅ Updated imageUrl:', updatedItem.imageUrl)
+    console.log('✅ Updated successfully')
 
     res.json({
       success: true,

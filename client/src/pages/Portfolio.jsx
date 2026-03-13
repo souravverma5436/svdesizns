@@ -300,9 +300,9 @@ const Portfolio = () => {
                     )}
                     
                     {/* Actual image */}
-                    {project.imageUrl ? (
+                    {(project.imageData || project.imageUrl) ? (
                       <img
-                        src={project.imageUrl}
+                        src={project.imageData ? `data:${project.imageType || 'image/jpeg'};base64,${project.imageData}` : project.imageUrl}
                         alt={project.title}
                         className={`w-full h-full object-cover transition-opacity duration-300 ${
                           imageLoadingStates[project._id] ? 'opacity-0' : 'opacity-100'
@@ -413,9 +413,9 @@ const Portfolio = () => {
 
               {/* Project Image */}
               <div className="h-48 sm:h-64 lg:h-96 bg-gradient-to-br from-primary via-secondary to-accent flex items-center justify-center overflow-hidden">
-                {selectedProject.imageUrl ? (
+                {(selectedProject.imageData || selectedProject.imageUrl) ? (
                   <img
-                    src={selectedProject.imageUrl}
+                    src={selectedProject.imageData ? `data:${selectedProject.imageType || 'image/jpeg'};base64,${selectedProject.imageData}` : selectedProject.imageUrl}
                     alt={selectedProject.title}
                     className="w-full h-full object-cover"
                     loading="lazy"

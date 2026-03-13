@@ -160,11 +160,12 @@ const AdminDashboard = () => {
       const response = await apiClient.uploadImage(formDataToUpload)
       
       if (response.data.success) {
-        // Update formData with new image URL (without cache buster in database)
-        const newImageUrl = response.data.data.imageUrl
+        // Update formData with Base64 image data
         setFormData(prevData => ({ 
           ...prevData, 
-          imageUrl: newImageUrl 
+          imageData: response.data.data.imageData,
+          imageType: response.data.data.imageType,
+          imageUrl: undefined // Clear URL when using Base64
         }))
         toast.success('Image uploaded successfully!')
       }
