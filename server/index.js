@@ -89,16 +89,16 @@ const connectDB = async () => {
     console.log('🔄 Connecting to MongoDB...')
     console.log('📍 Environment:', process.env.NODE_ENV)
 
-    // Enhanced connection options for Render deployment
+    // Enhanced connection options for better reliability
     const options = {
       dbName: "sourav-portfolio",
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 10000, // Keep trying to send operations for 10 seconds
-      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+      serverSelectionTimeoutMS: 30000, // Increase timeout to 30 seconds
+      socketTimeoutMS: 75000, // Close sockets after 75 seconds of inactivity
       family: 4, // Use IPv4, skip trying IPv6
       retryWrites: true,
-      w: 'majority'
+      w: 'majority',
+      maxPoolSize: 10,
+      minPoolSize: 2
     };
 
     await mongoose.connect(mongoURI, options);
