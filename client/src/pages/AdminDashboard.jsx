@@ -160,12 +160,10 @@ const AdminDashboard = () => {
       const response = await apiClient.uploadImage(formDataToUpload)
       
       if (response.data.success) {
-        // Update formData with Base64 image data
+        // Update formData with image URL
         setFormData(prevData => ({ 
           ...prevData, 
-          imageData: response.data.data.imageData,
-          imageType: response.data.data.imageType,
-          imageUrl: undefined // Clear URL when using Base64
+          imageUrl: response.data.data.imageUrl
         }))
         toast.success('Image uploaded successfully!')
       }

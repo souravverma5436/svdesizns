@@ -255,7 +255,7 @@ const Home = () => {
                 >
                   <div className="h-48 sm:h-56 lg:h-64 overflow-hidden bg-gray-800">
                     <img
-                      src={project.imageData ? `data:${project.imageType || 'image/jpeg'};base64,${project.imageData}` : project.imageUrl}
+                      src={project.imageUrl}
                       alt={project.title}
                       className="w-full h-full object-cover"
                       loading="lazy"
