@@ -11,52 +11,72 @@ const Services = () => {
   }, [])
 
   const fetchServices = async () => {
+    // Fallback services to show immediately
+    const fallbackServices = [
+      {
+        _id: '1',
+        name: 'Logo Design',
+        description: 'Create memorable and impactful logos that represent your brand identity perfectly',
+        priceINR: 4150,
+        features: ['Custom Logo Design', 'Multiple Concepts', 'Vector Files', 'Brand Guidelines']
+      },
+      {
+        _id: '2',
+        name: 'Branding',
+        description: 'Complete brand identity solutions including logo, colors, typography, and guidelines',
+        priceINR: 16600,
+        features: ['Logo Design', 'Color Palette', 'Typography', 'Brand Guidelines', 'Business Cards']
+      },
+      {
+        _id: '3',
+        name: 'Social Media Creatives',
+        description: 'Eye-catching social media graphics that boost engagement and brand awareness',
+        priceINR: 2490,
+        features: ['Instagram Posts', 'Story Templates', 'Facebook Covers', 'LinkedIn Graphics']
+      },
+      {
+        _id: '4',
+        name: 'Posters & Ads',
+        description: 'Compelling poster designs and advertisements that capture attention and drive action',
+        priceINR: 3320,
+        features: ['Event Posters', 'Print Ads', 'Digital Banners', 'Promotional Materials']
+      },
+      {
+        _id: '5',
+        name: 'Website Development',
+        description: 'Professional website design and development services',
+        priceINR: 15000,
+        features: ['Responsive Design', 'Modern UI/UX', 'SEO Optimized', 'Fast Loading']
+      }
+    ]
+    
     try {
-      setLoading(true)
+      // Check cache first
+      const cached = sessionStorage.getItem('servicesData')
+      const cacheTime = sessionStorage.getItem('servicesDataTime')
+      const now = Date.now()
+      
+      if (cached && cacheTime && (now - parseInt(cacheTime)) < 300000) {
+        setServices(JSON.parse(cached))
+        setLoading(false)
+        return
+      }
+      
+      // Show fallback immediately
+      setServices(fallbackServices)
+      setLoading(false)
+      
+      // Try to fetch real data
       const response = await apiClient.getServices()
-      setServices(response.data.data || [])
+      const servicesData = response.data.data || []
+      
+      if (servicesData.length > 0) {
+        setServices(servicesData)
+        sessionStorage.setItem('servicesData', JSON.stringify(servicesData))
+        sessionStorage.setItem('servicesDataTime', now.toString())
+      }
     } catch (error) {
       console.error('Error fetching services:', error)
-      // Fallback to default services if API fails
-      const fallbackServices = [
-        {
-          _id: '1',
-          name: 'Logo Design',
-          description: 'Create memorable and impactful logos that represent your brand identity perfectly',
-          priceINR: 4150,
-          features: ['Custom Logo Design', 'Multiple Concepts', 'Vector Files', 'Brand Guidelines']
-        },
-        {
-          _id: '2',
-          name: 'Branding',
-          description: 'Complete brand identity solutions including logo, colors, typography, and guidelines',
-          priceINR: 16600,
-          features: ['Logo Design', 'Color Palette', 'Typography', 'Brand Guidelines', 'Business Cards']
-        },
-        {
-          _id: '3',
-          name: 'Social Media Creatives',
-          description: 'Eye-catching social media graphics that boost engagement and brand awareness',
-          priceINR: 2490,
-          features: ['Instagram Posts', 'Story Templates', 'Facebook Covers', 'LinkedIn Graphics']
-        },
-        {
-          _id: '4',
-          name: 'Posters & Ads',
-          description: 'Compelling poster designs and advertisements that capture attention and drive action',
-          priceINR: 3320,
-          features: ['Event Posters', 'Print Ads', 'Digital Banners', 'Promotional Materials']
-        },
-        {
-          _id: '5',
-          name: 'Website Development',
-          description: 'Professional website design and development services. From landing pages to full-featured web applications, built with modern technologies and best practices.',
-          priceINR: 15000,
-          features: ['Responsive Design', 'Modern UI/UX', 'SEO Optimized', 'Fast Loading', 'Mobile Friendly', 'Custom Development']
-        }
-      ]
-      setServices(fallbackServices)
-    } finally {
       setLoading(false)
     }
   }

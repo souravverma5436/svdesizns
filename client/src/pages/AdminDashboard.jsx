@@ -160,8 +160,8 @@ const AdminDashboard = () => {
       const response = await apiClient.uploadImage(formDataToUpload)
       
       if (response.data.success) {
-        // Update formData with new image URL
-        const newImageUrl = response.data.data.imageUrl
+        // Update formData with new image URL + cache buster
+        const newImageUrl = response.data.data.imageUrl + '?t=' + Date.now()
         setFormData(prevData => ({ 
           ...prevData, 
           imageUrl: newImageUrl 

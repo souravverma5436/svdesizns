@@ -24,9 +24,44 @@ const Portfolio = () => {
   }, [])
 
   const fetchPortfolioItems = async () => {
+    // Show fallback data immediately while loading
+    const fallbackProjects = [
+      {
+        _id: '1',
+        title: 'Modern Tech Logo',
+        category: 'Logo Design',
+        description: 'Clean and modern logo design for a tech startup',
+        imageUrl: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&h=300&fit=crop',
+        tags: ['Logo', 'Branding', 'Tech']
+      },
+      {
+        _id: '2',
+        title: 'Restaurant Branding',
+        category: 'Branding',
+        description: 'Complete brand identity for a premium restaurant',
+        imageUrl: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=300&fit=crop',
+        tags: ['Branding', 'Identity', 'Food']
+      },
+      {
+        _id: '3',
+        title: 'Social Media Campaign',
+        category: 'Social Media Creatives',
+        description: 'Engaging social media graphics for fashion brand',
+        imageUrl: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=300&fit=crop',
+        tags: ['Social Media', 'Fashion', 'Campaign']
+      },
+      {
+        _id: '7',
+        title: 'Spark Soul',
+        category: 'Websites',
+        description: 'Modern spiritual wellness platform',
+        imageUrl: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=600&fit=crop',
+        websiteUrl: 'https://spark-soul.vercel.app/',
+        tags: ['Website', 'React']
+      }
+    ]
+    
     try {
-      setLoading(true)
-      
       // Check cache first
       const cached = sessionStorage.getItem('portfolioItems')
       const cacheTime = sessionStorage.getItem('portfolioItemsTime')
@@ -34,27 +69,30 @@ const Portfolio = () => {
       
       // Use cache if less than 5 minutes old
       if (cached && cacheTime && (now - parseInt(cacheTime)) < 300000) {
-        setProjects(JSON.parse(cached))
+        const cachedData = JSON.parse(cached)
+        setProjects(cachedData)
         setLoading(false)
         return
       }
       
+      // Set fallback data immediately
+      setProjects(fallbackProjects)
+      setLoading(false)
+      
+      // Try to fetch real data
       const response = await apiClient.getPortfolio()
       const portfolioData = response.data.data || []
-      setProjects(portfolioData)
       
-      // Cache the data
-      sessionStorage.setItem('portfolioItems', JSON.stringify(portfolioData))
-      sessionStorage.setItem('portfolioItemsTime', now.toString())
-      
-      // Initialize image loading states
-      const loadingStates = {}
-      portfolioData.forEach(project => {
-        loadingStates[project._id] = true
-      })
-      setImageLoadingStates(loadingStates)
+      if (portfolioData.length > 0) {
+        setProjects(portfolioData)
+        sessionStorage.setItem('portfolioItems', JSON.stringify(portfolioData))
+        sessionStorage.setItem('portfolioItemsTime', now.toString())
+      }
     } catch (error) {
       console.error('Error fetching portfolio:', error)
+      setLoading(false)
+    }
+  }
       // Fallback to demo data if API fails
       const fallbackProjects = [
         {
