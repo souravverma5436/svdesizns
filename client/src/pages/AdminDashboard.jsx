@@ -214,6 +214,12 @@ const AdminDashboard = () => {
     e.preventDefault()
     try {
       if (modalType === 'portfolio') {
+        // Validate image is provided for new items
+        if (!editingItem && !formData.imageUrl) {
+          toast.error('Please upload an image or provide an image URL')
+          return
+        }
+
         const portfolioData = {
           ...formData,
           tags: typeof formData.tags === 'string' ? formData.tags.split(',').map(tag => tag.trim()) : formData.tags,
@@ -906,7 +912,6 @@ const AdminDashboard = () => {
                               onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                               className="w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-lg focus:border-primary focus:outline-none"
                               placeholder="https://example.com/image.jpg"
-                              required={!editingItem}
                             />
                             <p className="text-xs text-gray-500 mt-1">
                               Paste image URL from Imgur, Cloudinary, or any image hosting service
