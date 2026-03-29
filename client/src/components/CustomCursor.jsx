@@ -129,14 +129,14 @@ const CustomCursor = () => {
         ref={cursorRef}
         className="fixed left-0 top-0 pointer-events-none z-[9999] mix-blend-mode-difference"
         style={{
-          width: '12px',
-          height: '12px',
+          width: '10px',
+          height: '10px',
           borderRadius: '50%',
-          background: 'linear-gradient(45deg, #6366f1, #8b5cf6)',
-          boxShadow: '0 0 20px rgba(99, 102, 241, 0.5)'
+          background: 'rgba(255, 255, 255, 0.95)',
+          boxShadow: '0 0 12px rgba(255, 255, 255, 0.35)'
         }}
         animate={{
-          scale: isClicking ? 0.75 : isHovering ? 1.45 : 1,
+          scale: isClicking ? 0.8 : isHovering ? 1.15 : 1,
           opacity: isVisible ? 1 : 0
         }}
         transition={{
@@ -151,17 +151,18 @@ const CustomCursor = () => {
         ref={followerRef}
         className="fixed left-0 top-0 pointer-events-none z-[9998]"
         style={{
-          width: '40px',
-          height: '40px',
+          width: '36px',
+          height: '36px',
           borderRadius: '50%',
-          border: '2px solid rgba(99, 102, 241, 0.3)',
-          background: 'rgba(99, 102, 241, 0.05)',
-          backdropFilter: 'blur(4px)'
+          border: '1.5px solid rgba(255, 255, 255, 0.45)',
+          background: 'rgba(255, 255, 255, 0.04)',
+          backdropFilter: 'blur(3px)'
         }}
         animate={{
-          scale: isClicking ? 0.88 : isHovering ? 1.15 : 1,
+          scale: isClicking ? 0.92 : isHovering ? 1.18 : 1,
           opacity: isVisible ? 1 : 0,
-          borderColor: isHovering ? 'rgba(139, 92, 246, 0.6)' : 'rgba(99, 102, 241, 0.3)'
+          borderColor: isHovering ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.45)',
+          backgroundColor: isHovering ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.04)'
         }}
         transition={{
           type: 'spring',
@@ -179,7 +180,7 @@ const CustomCursor = () => {
           width: '60px',
           height: '60px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%)'
+          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 72%)'
         }}
         animate={{
           opacity: isVisible && isHovering ? 1 : 0,
