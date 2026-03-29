@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import toast from 'react-hot-toast'
 import emailjs from '@emailjs/browser'
@@ -83,7 +83,6 @@ const Contact = () => {
         },
         EMAILJS_PUBLIC_KEY
       )
-
       setSubmitted(true)
       setFormData({ name: '', email: '', phone: '', service: '', message: '' })
     } catch (error) {
@@ -95,53 +94,120 @@ const Contact = () => {
   }
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen pt-16 sm:pt-20">
+      {/* Header */}
       <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gradient mb-4 sm:mb-6">
-              Lets Work Together
+              Let’s Work Together
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto px-4">
-              Ready to bring your vision to life? Get in touch and lets create something amazing together
+              Ready to bring your vision to life? Get in touch and let’s create something amazing together
             </p>
           </motion.div>
         </div>
       </section>
 
       <div className="max-w-6xl mx-auto px-4 pb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-            <div className="glass rounded-3xl p-8">
-              <h2 className="text-3xl font-bold mb-6">Send Me a Message</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+
+          {/* Contact Form */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6">Send Me a Message</h2>
 
               {submitted ? (
-                <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-12">
-                  <div className="text-6xl mb-6">u{2705}</div>
-                  <h3 className="text-2xl font-bold text-gradient mb-3">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="text-center py-10 sm:py-12"
+                >
+                  <div className="text-5xl sm:text-6xl mb-4 sm:mb-6">✅</div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-gradient mb-3">
                     Thank you for contacting SvDesizns.
                   </h3>
-                  <p className="text-gray-300 mb-6">
+                  <p className="text-gray-300 mb-6 text-sm sm:text-base">
                     We have received your message and will get back to you soon.
                   </p>
-                  <button onClick={() => setSubmitted(false)} className="btn-primary cursor-hover">
+                  <button
+                    onClick={() => setSubmitted(false)}
+                    className="btn-primary cursor-hover"
+                  >
                     Send Another Message
                   </button>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <input type="text" name="name" placeholder="Your full name *" value={formData.name} onChange={handleInputChange} className="w-full px-4 py-3 bg-dark-lighter border border-gray-600 rounded-xl focus:border-primary focus:outline-none cursor-hover" required />
-                  <input type="email" name="email" placeholder="your.email@example.com *" value={formData.email} onChange={handleInputChange} className="w-full px-4 py-3 bg-dark-lighter border border-gray-600 rounded-xl focus:border-primary focus:outline-none cursor-hover" required />
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Your full name *"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 bg-dark-lighter border border-gray-600 rounded-xl focus:border-primary focus:outline-none text-sm sm:text-base"
+                    required
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="your.email@example.com *"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 bg-dark-lighter border border-gray-600 rounded-xl focus:border-primary focus:outline-none text-sm sm:text-base"
+                    required
+                  />
                   <div>
-                    <input type="tel" name="phone" placeholder="Phone/WhatsApp number (optional)" value={formData.phone} onChange={handleInputChange} className="w-full px-4 py-3 bg-dark-lighter border border-gray-600 rounded-xl focus:border-primary focus:outline-none cursor-hover" />
-                    <p className="text-xs text-gray-400 mt-1 ml-1">📱 Optional - for WhatsApp or phone contact</p>
+                    <input
+                      type="tel"
+                      name="phone"
+                      placeholder="Phone/WhatsApp number (optional)"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 bg-dark-lighter border border-gray-600 rounded-xl focus:border-primary focus:outline-none text-sm sm:text-base"
+                    />
+                    <p className="text-xs text-gray-400 mt-1 ml-1">
+                      📱 Optional — for WhatsApp or phone contact
+                    </p>
                   </div>
-                  <select name="service" value={formData.service} onChange={handleInputChange} className="w-full px-4 py-3 bg-dark-lighter border border-gray-600 rounded-xl focus:border-primary focus:outline-none cursor-hover" required>
+                  <select
+                    name="service"
+                    value={formData.service}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 bg-dark-lighter border border-gray-600 rounded-xl focus:border-primary focus:outline-none text-sm sm:text-base"
+                    required
+                  >
                     <option value="">Select a service *</option>
-                    {services.map((s) => (<option key={s} value={s}>{s}</option>))}
+                    {services.map((s) => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
                   </select>
-                  <textarea name="message" rows={5} placeholder="Tell me about your project... *" value={formData.message} onChange={handleInputChange} className="w-full px-4 py-3 bg-dark-lighter border border-gray-600 rounded-xl resize-none focus:border-primary focus:outline-none cursor-hover" required />
-                  <button type="submit" disabled={isSubmitting} className={`w-full py-4 rounded-xl font-semibold transition cursor-hover ${isSubmitting ? 'bg-gray-600 cursor-not-allowed' : 'bg-gradient-to-r from-primary to-secondary hover:scale-105'}`}>
+                  <textarea
+                    name="message"
+                    rows={5}
+                    placeholder="Tell me about your project... *"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 bg-dark-lighter border border-gray-600 rounded-xl resize-none focus:border-primary focus:outline-none text-sm sm:text-base"
+                    required
+                  />
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={`w-full py-3 sm:py-4 rounded-xl font-semibold transition text-sm sm:text-base ${
+                      isSubmitting
+                        ? 'bg-gray-600 cursor-not-allowed'
+                        : 'bg-gradient-to-r from-primary to-secondary hover:scale-105 cursor-hover'
+                    }`}
+                  >
                     {isSubmitting ? 'Sending...' : 'Send Message'}
                   </button>
                 </form>
@@ -149,21 +215,34 @@ const Contact = () => {
             </div>
           </motion.div>
 
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold mb-8">Other Ways to Connect</h2>
+          {/* Contact Methods */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="space-y-4 sm:space-y-6"
+          >
+            <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Other Ways to Connect</h2>
             {contactMethods.map((m) => (
-              <a key={m.title} href={m.link} target="_blank" rel="noopener noreferrer" className="block glass rounded-2xl p-6 hover:scale-105 transition">
-                <div className="flex items-center gap-4">
-                  <span className="text-3xl">{m.icon}</span>
-                  <div>
-                    <h3 className="text-xl font-semibold">{m.title}</h3>
-                    <p className="text-primary">{m.subtitle}</p>
-                    <p className="text-gray-400 text-sm">{m.description}</p>
+              <a
+                key={m.title}
+                href={m.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block glass rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:scale-105 transition-transform duration-300"
+              >
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <span className="text-2xl sm:text-3xl flex-shrink-0">{m.icon}</span>
+                  <div className="min-w-0">
+                    <h3 className="text-base sm:text-xl font-semibold">{m.title}</h3>
+                    <p className="text-primary text-sm sm:text-base truncate">{m.subtitle}</p>
+                    <p className="text-gray-400 text-xs sm:text-sm">{m.description}</p>
                   </div>
                 </div>
               </a>
             ))}
-          </div>
+          </motion.div>
+
         </div>
       </div>
     </div>
