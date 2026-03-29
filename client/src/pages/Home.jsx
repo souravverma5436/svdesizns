@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { brandAnimations, viewportAnimations } from '../utils/animations'
 import { featuredProjects } from '../data/projects'
 
 const Home = () => {
   const [counters, setCounters] = useState({ projects: 0, clients: 0, experience: 0 })
+  const navigate = useNavigate()
 
   // Suppress THREE.js console errors
   useEffect(() => {
@@ -38,6 +39,17 @@ const Home = () => {
 
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const openFeaturedProject = (project) => {
+    if (!project) return
+
+    if (project.websiteUrl) {
+      window.open(project.websiteUrl, '_blank', 'noopener,noreferrer')
+      return
+    }
+
+    navigate(`/portfolio?project=${project.id}`)
   }
 
   return (
@@ -127,26 +139,50 @@ const Home = () => {
             {featuredProjects.map((project, index) => (
               <motion.div
                 key={project.id}
-                className="glass rounded-xl sm:rounded-2xl overflow-hidden card-hover cursor-hover"
+                className="glass rounded-xl sm:rounded-2xl overflow-hidden card-hover cursor-hover group"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -10 }}
+                onClick={() => openFeaturedProject(project)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault()
+                    openFeaturedProject(project)
+                  }
+                }}
+                role="link"
+                tabIndex={0}
               >
-                <div className="h-48 sm:h-56 lg:h-64 overflow-hidden bg-gray-800">
-                  <img src={project.image} alt={project.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                <div className="relative h-48 sm:h-56 lg:h-64 overflow-hidden bg-gray-800">
+                  <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/20 to-transparent opacity-70" />
+                  <div className="absolute bottom-4 left-4 inline-flex items-center rounded-full border border-white/15 bg-black/35 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                    {project.websiteUrl ? 'Open Project' : 'Quick View'}
+                  </div>
                 </div>
                 <div className="p-4 sm:p-6">
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-lg sm:text-xl font-semibold">{project.title}</h3>
+                    <h3 className="text-lg sm:text-xl font-semibold transition-colors group-hover:text-primary">{project.title}</h3>
                     <span className="px-2 py-1 bg-primary/20 text-primary rounded-full text-xs">{project.category}</span>
                   </div>
                   <p className="text-gray-400 text-sm sm:text-base line-clamp-2">{project.description}</p>
                   {project.websiteUrl && (
-                    <a href={project.websiteUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-3 text-primary hover:text-secondary transition text-sm">
+                    <a
+                      href={project.websiteUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block mt-3 text-primary hover:text-secondary transition text-sm"
+                      onClick={(event) => event.stopPropagation()}
+                    >
                       Visit Website →
                     </a>
+                  )}
+                  {!project.websiteUrl && (
+                    <span className="inline-block mt-3 text-primary group-hover:text-secondary transition text-sm">
+                      View Project →
+                    </span>
                   )}
                 </div>
               </motion.div>

@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useSearchParams } from 'react-router-dom'
 import projects from '../data/projects'
 
 const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [selectedProject, setSelectedProject] = useState(null)
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const categories = [
     { id: 'all', name: 'All Projects' },
@@ -27,6 +29,9 @@ const Portfolio = () => {
   const closeModal = () => {
     setSelectedProject(null)
     document.body.style.overflow = 'unset'
+    const nextParams = new URLSearchParams(searchParams)
+    nextParams.delete('project')
+    setSearchParams(nextParams, { replace: true })
   }
 
   const nextProject = () => {
@@ -38,6 +43,24 @@ const Portfolio = () => {
     const idx = projects.findIndex(p => p.id === selectedProject.id)
     setSelectedProject(projects[idx === 0 ? projects.length - 1 : idx - 1])
   }
+
+  useEffect(() => {
+    const projectId = Number(searchParams.get('project'))
+
+    if (!projectId) return
+
+    const matchedProject = projects.find((project) => project.id === projectId)
+    if (matchedProject) {
+      setSelectedCategory('all')
+      openModal(matchedProject)
+    }
+  }, [searchParams])
+
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [])
 
   return (
     <div className="min-h-screen pt-16 sm:pt-20">
