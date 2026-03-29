@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
-const CURSOR_OFFSET = 6
-const FOLLOWER_OFFSET = 20
+const CURSOR_OFFSET = 5
+const FOLLOWER_OFFSET = 18
 const GLOW_OFFSET = 30
 
 const isInteractiveTarget = (target) => {
