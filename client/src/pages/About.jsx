@@ -5,6 +5,7 @@ const About = () => {
     { name: 'Logo Design', level: 95 },
     { name: 'Branding', level: 90 },
     { name: 'Social Media Design', level: 88 },
+    { name: 'Web Design & Development', level: 86 },
     { name: 'Print Design', level: 85 },
     { name: 'UI/UX Design', level: 80 },
     { name: 'Illustration', level: 75 }

@@ -1,22 +1,25 @@
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import CustomCursor from './components/CustomCursor'
-import ParticleBackground from './components/ParticleBackground'
 import Home from './pages/Home'
 import About from './pages/About'
 import Portfolio from './pages/Portfolio'
 import Services from './pages/Services'
 import Contact from './pages/Contact'
 
+const CustomCursor = lazy(() => import('./components/CustomCursor'))
+const ParticleBackground = lazy(() => import('./components/ParticleBackground'))
+
 function App() {
   return (
     <Router>
       <div className="min-h-screen bg-dark relative">
-        <CustomCursor />
-        <ParticleBackground />
+        <Suspense fallback={null}>
+          <CustomCursor />
+          <ParticleBackground />
+        </Suspense>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
