@@ -10,8 +10,6 @@ import About from './pages/About'
 import Portfolio from './pages/Portfolio'
 import Services from './pages/Services'
 import Contact from './pages/Contact'
-import AdminLogin from './pages/AdminLogin'
-import AdminDashboard from './pages/AdminDashboard'
 
 function App() {
   return (
@@ -19,49 +17,16 @@ function App() {
       <div className="min-h-screen bg-dark relative">
         <CustomCursor />
         <ParticleBackground />
+        <Navbar />
         <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={
-            <>
-              <Navbar />
-              <Home />
-              <Footer />
-            </>
-          } />
-          <Route path="/about" element={
-            <>
-              <Navbar />
-              <About />
-              <Footer />
-            </>
-          } />
-          <Route path="/portfolio" element={
-            <>
-              <Navbar />
-              <Portfolio />
-              <Footer />
-            </>
-          } />
-          <Route path="/services" element={
-            <>
-              <Navbar />
-              <Services />
-              <Footer />
-            </>
-          } />
-          <Route path="/contact" element={
-            <>
-              <Navbar />
-              <Contact />
-              <Footer />
-            </>
-          } />
-          
-          {/* Admin Routes */}
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
-        <Toaster 
+        <Footer />
+        <Toaster
           position="top-right"
           toastOptions={{
             duration: 4000,

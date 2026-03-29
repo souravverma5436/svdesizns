@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import toast from 'react-hot-toast'
-import { apiClient } from '../utils/api'
+import projects from '../data/projects'
 
 const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [selectedProject, setSelectedProject] = useState(null)
-  const [projects, setProjects] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [imageLoadingStates, setImageLoadingStates] = useState({})
 
   const categories = [
     { id: 'all', name: 'All Projects' },
@@ -19,84 +15,9 @@ const Portfolio = () => {
     { id: 'Websites', name: 'Websites' }
   ]
 
-  useEffect(() => {
-    fetchPortfolioItems()
-  }, [])
-
-  const fetchPortfolioItems = async () => {
-    // Show fallback data immediately while loading
-    const fallbackProjects = [
-      {
-        _id: '1',
-        title: 'Modern Tech Logo',
-        category: 'Logo Design',
-        description: 'Clean and modern logo design for a tech startup',
-        imageUrl: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&h=300&fit=crop',
-        tags: ['Logo', 'Branding', 'Tech']
-      },
-      {
-        _id: '2',
-        title: 'Restaurant Branding',
-        category: 'Branding',
-        description: 'Complete brand identity for a premium restaurant',
-        imageUrl: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=300&fit=crop',
-        tags: ['Branding', 'Identity', 'Food']
-      },
-      {
-        _id: '3',
-        title: 'Social Media Campaign',
-        category: 'Social Media Creatives',
-        description: 'Engaging social media graphics for fashion brand',
-        imageUrl: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=300&fit=crop',
-        tags: ['Social Media', 'Fashion', 'Campaign']
-      },
-      {
-        _id: '7',
-        title: 'Spark Soul',
-        category: 'Websites',
-        description: 'Modern spiritual wellness platform',
-        imageUrl: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=600&fit=crop',
-        websiteUrl: 'https://spark-soul.vercel.app/',
-        tags: ['Website', 'React']
-      }
-    ]
-    
-    try {
-      // Check cache first
-      const cached = sessionStorage.getItem('portfolioItems')
-      const cacheTime = sessionStorage.getItem('portfolioItemsTime')
-      const now = Date.now()
-      
-      // Use cache if less than 5 minutes old
-      if (cached && cacheTime && (now - parseInt(cacheTime)) < 300000) {
-        const cachedData = JSON.parse(cached)
-        setProjects(cachedData)
-        setLoading(false)
-        return
-      }
-      
-      // Set fallback data immediately
-      setProjects(fallbackProjects)
-      setLoading(false)
-      
-      // Try to fetch real data
-      const response = await apiClient.getPortfolio()
-      const portfolioData = response.data.data || []
-      
-      if (portfolioData.length > 0) {
-        setProjects(portfolioData)
-        sessionStorage.setItem('portfolioItems', JSON.stringify(portfolioData))
-        sessionStorage.setItem('portfolioItemsTime', now.toString())
-      }
-    } catch (error) {
-      console.error('Error fetching portfolio:', error)
-      setLoading(false)
-    }
-  }
-
-  const filteredProjects = selectedCategory === 'all' 
-    ? projects 
-    : projects.filter(project => project.category === selectedCategory)
+  const filteredProjects = selectedCategory === 'all'
+    ? projects
+    : projects.filter(p => p.category === selectedCategory)
 
   const openModal = (project) => {
     setSelectedProject(project)
@@ -109,40 +30,13 @@ const Portfolio = () => {
   }
 
   const nextProject = () => {
-    const currentIndex = projects.findIndex(p => p._id === selectedProject._id)
-    const nextIndex = (currentIndex + 1) % projects.length
-    setSelectedProject(projects[nextIndex])
+    const idx = projects.findIndex(p => p.id === selectedProject.id)
+    setSelectedProject(projects[(idx + 1) % projects.length])
   }
 
   const prevProject = () => {
-    const currentIndex = projects.findIndex(p => p._id === selectedProject._id)
-    const prevIndex = currentIndex === 0 ? projects.length - 1 : currentIndex - 1
-    setSelectedProject(projects[prevIndex])
-  }
-
-  const handleImageLoad = (projectId) => {
-    setImageLoadingStates(prev => ({
-      ...prev,
-      [projectId]: false
-    }))
-  }
-
-  const handleImageError = (projectId) => {
-    setImageLoadingStates(prev => ({
-      ...prev,
-      [projectId]: false
-    }))
-  }
-
-  if (loading) {
-    return (
-      <div className="min-h-screen pt-16 sm:pt-20 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin w-12 h-12 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
-          <p className="text-gray-400">Loading portfolio...</p>
-        </div>
-      </div>
-    )
+    const idx = projects.findIndex(p => p.id === selectedProject.id)
+    setSelectedProject(projects[idx === 0 ? projects.length - 1 : idx - 1])
   }
 
   return (
@@ -194,14 +88,11 @@ const Portfolio = () => {
       {/* Projects Grid */}
       <section className="px-4 sm:px-6 lg:px-8 pb-12 sm:pb-16 lg:pb-20">
         <div className="max-w-6xl mx-auto">
-          <motion.div 
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
-            layout
-          >
+          <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8" layout>
             <AnimatePresence>
               {filteredProjects.map((project, index) => (
                 <motion.div
-                  key={project._id}
+                  key={project.id}
                   layout
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -213,32 +104,12 @@ const Portfolio = () => {
                 >
                   {/* Project Image */}
                   <div className="relative h-48 sm:h-56 lg:h-64 bg-gradient-to-br from-primary via-secondary to-accent overflow-hidden">
-                    {/* Loading skeleton */}
-                    {imageLoadingStates[project._id] && (
-                      <div className="absolute inset-0 loading-skeleton" />
-                    )}
-                    
-                    {/* Actual image */}
-                    {project.imageUrl ? (
-                      <img
-                        src={project.imageUrl}
-                        alt={project.title}
-                        className={`w-full h-full object-cover transition-opacity duration-300 ${
-                          imageLoadingStates[project._id] ? 'opacity-0' : 'opacity-100'
-                        }`}
-                        loading="lazy"
-                        onLoad={() => handleImageLoad(project._id)}
-                        onError={() => handleImageError(project._id)}
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white opacity-80">
-                          {project.title.charAt(0)}
-                        </span>
-                      </div>
-                    )}
-                    
-                    {/* Hover overlay */}
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
                     <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <span className="text-white font-semibold text-sm sm:text-base bg-black/50 px-4 py-2 rounded-full backdrop-blur-sm">
@@ -257,18 +128,10 @@ const Portfolio = () => {
                     </p>
                     <div className="flex flex-wrap gap-1 sm:gap-2">
                       {project.tags?.slice(0, 3).map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 sm:px-3 py-1 bg-dark-lighter rounded-full text-xs sm:text-sm text-gray-300"
-                        >
+                        <span key={tag} className="px-2 sm:px-3 py-1 bg-dark-lighter rounded-full text-xs sm:text-sm text-gray-300">
                           {tag}
                         </span>
                       ))}
-                      {project.tags?.length > 3 && (
-                        <span className="px-2 sm:px-3 py-1 bg-dark-lighter rounded-full text-xs sm:text-sm text-gray-300">
-                          +{project.tags.length - 3}
-                        </span>
-                      )}
                     </div>
                   </div>
                 </motion.div>
@@ -287,24 +150,17 @@ const Portfolio = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            {/* Backdrop */}
             <motion.div
               className="absolute inset-0 bg-black bg-opacity-80 backdrop-blur-sm"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
               onClick={closeModal}
             />
-
-            {/* Modal Content */}
             <motion.div
               className="relative glass rounded-2xl sm:rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             >
-              {/* Close Button */}
               <button
                 onClick={closeModal}
                 className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-dark-light rounded-full flex items-center justify-center cursor-hover hover:bg-primary transition-colors"
@@ -312,47 +168,29 @@ const Portfolio = () => {
                 <span className="text-white text-lg sm:text-xl">×</span>
               </button>
 
-              {/* Navigation Buttons */}
               {projects.length > 1 && (
                 <>
-                  <button
-                    onClick={prevProject}
-                    className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-dark-light rounded-full flex items-center justify-center cursor-hover hover:bg-primary transition-colors"
-                  >
+                  <button onClick={prevProject} className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-dark-light rounded-full flex items-center justify-center cursor-hover hover:bg-primary transition-colors">
                     <span className="text-white text-sm sm:text-base">‹</span>
                   </button>
-                  <button
-                    onClick={nextProject}
-                    className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-dark-light rounded-full flex items-center justify-center cursor-hover hover:bg-primary transition-colors"
-                  >
+                  <button onClick={nextProject} className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-dark-light rounded-full flex items-center justify-center cursor-hover hover:bg-primary transition-colors">
                     <span className="text-white text-sm sm:text-base">›</span>
                   </button>
                 </>
               )}
 
-              {/* Project Image */}
-              <div className="h-48 sm:h-64 lg:h-96 bg-gradient-to-br from-primary via-secondary to-accent flex items-center justify-center overflow-hidden">
-                {selectedProject.imageUrl ? (
-                  <img
-                    src={selectedProject.imageUrl}
-                    alt={selectedProject.title}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                ) : (
-                  <span className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white opacity-80">
-                    {selectedProject.title.charAt(0)}
-                  </span>
-                )}
+              <div className="bg-black flex items-center justify-center">
+                <img
+                  src={selectedProject.image}
+                  alt={selectedProject.title}
+                  className="w-full max-h-[70vh] object-contain"
+                />
               </div>
 
-              {/* Project Details */}
               <div className="p-4 sm:p-6 lg:p-8">
                 <h2 className="text-2xl sm:text-3xl font-bold text-gradient mb-3 sm:mb-4">
                   {selectedProject.title}
                 </h2>
-                
-                {/* Website Link for Website category */}
                 {selectedProject.websiteUrl && (
                   <a
                     href={selectedProject.websiteUrl}
@@ -363,17 +201,13 @@ const Portfolio = () => {
                     🌐 Visit Website
                   </a>
                 )}
-                
                 <p className="text-gray-300 text-base sm:text-lg mb-4 sm:mb-6">
                   {selectedProject.description}
                 </p>
-                {selectedProject.tags && selectedProject.tags.length > 0 && (
+                {selectedProject.tags?.length > 0 && (
                   <div className="flex flex-wrap gap-2 sm:gap-3 mb-4 sm:mb-6">
                     {selectedProject.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-3 sm:px-4 py-1 sm:py-2 bg-gradient-to-r from-primary to-secondary rounded-full text-xs sm:text-sm font-medium"
-                      >
+                      <span key={tag} className="px-3 sm:px-4 py-1 sm:py-2 bg-gradient-to-r from-primary to-secondary rounded-full text-xs sm:text-sm font-medium">
                         {tag}
                       </span>
                     ))}
@@ -381,11 +215,11 @@ const Portfolio = () => {
                 )}
                 <div className="text-gray-400 text-sm sm:text-base">
                   <p className="mb-3 sm:mb-4">
-                    This project showcases expertise in {selectedProject.category} design, 
+                    This project showcases expertise in {selectedProject.category} design,
                     combining creativity with strategic thinking to deliver impactful visual solutions.
                   </p>
                   <p>
-                    The design process involved extensive research, conceptualization, and refinement 
+                    The design process involved extensive research, conceptualization, and refinement
                     to ensure the final result perfectly aligns with the client's vision and brand identity.
                   </p>
                 </div>
