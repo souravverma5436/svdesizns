@@ -37,11 +37,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center py-3 sm:py-4">
           {/* Logo */}
           <Link to="/" className="cursor-hover">
-            <motion.div
-              whileHover={{ scale: 1.05, rotateX: 8, rotateY: -8 }}
-              style={{ transformPerspective: 1000 }}
-              className="text-xl sm:text-2xl font-bold text-gradient preserve-3d"
-            >
+            <motion.div whileHover={{ scale: 1.05 }} className="text-xl sm:text-2xl font-bold text-gradient">
               SV
             </motion.div>
           </Link>
@@ -56,7 +52,7 @@ const Navbar = () => {
                   location.pathname === item.path ? 'text-primary' : 'text-white hover:text-primary'
                 }`}
               >
-                <motion.span whileHover={{ y: -2, rotateX: 6 }} style={{ transformPerspective: 900 }} className="relative">
+                <motion.span whileHover={{ y: -2 }} className="relative">
                   {item.name}
                   {location.pathname === item.path && (
                     <motion.div layoutId="underline" className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary" />

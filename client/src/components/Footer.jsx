@@ -11,8 +11,6 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            whileHover={{ rotateX: 4, scale: 1.01 }}
-            style={{ transformPerspective: 1000 }}
           >
             <a
               href="https://svermaportfolio.netlify.app/"

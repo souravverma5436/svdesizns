@@ -134,9 +134,9 @@ const About = () => {
                 viewport={{ once: true }}
                 whileHover={{ scale: 1.02 }}
               >
-                <div className="flex justify-between items-center mb-3">
-                  <h3 className="text-base sm:text-lg font-semibold">{skill.name}</h3>
-                  <span className="text-primary font-bold text-sm sm:text-base">{skill.level}%</span>
+                <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                  <h3 className="text-base sm:text-lg font-semibold break-words">{skill.name}</h3>
+                  <span className="text-primary font-bold text-sm sm:text-base sm:flex-shrink-0">{skill.level}%</span>
                 </div>
                 <div className="w-full bg-dark-lighter rounded-full h-2 sm:h-3">
                   <motion.div
