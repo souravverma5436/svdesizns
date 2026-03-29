@@ -1,9 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
-
-const CURSOR_OFFSET = 5
-const FOLLOWER_OFFSET = 18
-const GLOW_OFFSET = 30
+import React, { useEffect, useState } from 'react'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
 
 const isInteractiveTarget = (target) => {
   if (!(target instanceof HTMLElement)) return false
@@ -21,18 +17,18 @@ const isInteractiveTarget = (target) => {
 }
 
 const CustomCursor = () => {
-  const cursorRef = useRef(null)
-  const followerRef = useRef(null)
-  const animationFrameRef = useRef(null)
-  const targetPositionRef = useRef({ x: -100, y: -100 })
-  const followerPositionRef = useRef({ x: -100, y: -100 })
-
   const [isMounted, setIsMounted] = useState(false)
   const [supportsHover, setSupportsHover] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
   const [isClicking, setIsClicking] = useState(false)
-  const [glowPosition, setGlowPosition] = useState({ x: -100, y: -100 })
+
+  const pointerX = useMotionValue(-100)
+  const pointerY = useMotionValue(-100)
+  const ringX = useSpring(pointerX, { stiffness: 420, damping: 34, mass: 0.5 })
+  const ringY = useSpring(pointerY, { stiffness: 420, damping: 34, mass: 0.5 })
+  const dotX = useSpring(pointerX, { stiffness: 900, damping: 45, mass: 0.18 })
+  const dotY = useSpring(pointerY, { stiffness: 900, damping: 45, mass: 0.18 })
 
   useEffect(() => {
     setIsMounted(true)
@@ -59,9 +55,8 @@ const CustomCursor = () => {
     if (!isMounted || !supportsHover) return undefined
 
     const updatePointer = (event) => {
-      const nextPosition = { x: event.clientX, y: event.clientY }
-      targetPositionRef.current = nextPosition
-      setGlowPosition(nextPosition)
+      pointerX.set(event.clientX)
+      pointerY.set(event.clientY)
       setIsVisible(true)
     }
 
@@ -76,22 +71,7 @@ const CustomCursor = () => {
     const handleWindowBlur = () => {
       setIsVisible(false)
       setIsClicking(false)
-    }
-
-    const animate = () => {
-      if (cursorRef.current && followerRef.current) {
-        const target = targetPositionRef.current
-        const follower = followerPositionRef.current
-
-        cursorRef.current.style.transform = `translate3d(${target.x - CURSOR_OFFSET}px, ${target.y - CURSOR_OFFSET}px, 0)`
-
-        follower.x += (target.x - FOLLOWER_OFFSET - follower.x) * 0.18
-        follower.y += (target.y - FOLLOWER_OFFSET - follower.y) * 0.18
-
-        followerRef.current.style.transform = `translate3d(${follower.x}px, ${follower.y}px, 0)`
-      }
-
-      animationFrameRef.current = window.requestAnimationFrame(animate)
+      setIsHovering(false)
     }
 
     document.addEventListener('pointermove', updatePointer, { passive: true })
@@ -102,8 +82,6 @@ const CustomCursor = () => {
     document.addEventListener('pointerenter', handlePointerEnter)
     window.addEventListener('blur', handleWindowBlur)
 
-    animationFrameRef.current = window.requestAnimationFrame(animate)
-
     return () => {
       document.removeEventListener('pointermove', updatePointer)
       document.removeEventListener('pointerover', handlePointerOver)
@@ -112,12 +90,8 @@ const CustomCursor = () => {
       document.removeEventListener('pointerleave', handlePointerLeave)
       document.removeEventListener('pointerenter', handlePointerEnter)
       window.removeEventListener('blur', handleWindowBlur)
-
-      if (animationFrameRef.current) {
-        window.cancelAnimationFrame(animationFrameRef.current)
-      }
     }
-  }, [isMounted, supportsHover])
+  }, [isMounted, supportsHover, pointerX, pointerY])
 
   if (!isMounted || !supportsHover) {
     return null
@@ -126,67 +100,47 @@ const CustomCursor = () => {
   return (
     <>
       <motion.div
-        ref={cursorRef}
-        className="fixed left-0 top-0 pointer-events-none z-[9999] mix-blend-mode-difference"
-        style={{
-          width: '10px',
-          height: '10px',
-          borderRadius: '50%',
-          background: 'rgba(255, 255, 255, 0.95)',
-          boxShadow: '0 0 12px rgba(255, 255, 255, 0.35)'
-        }}
-        animate={{
-          scale: isClicking ? 0.8 : isHovering ? 1.15 : 1,
-          opacity: isVisible ? 1 : 0
-        }}
-        transition={{
-          type: 'spring',
-          stiffness: 500,
-          damping: 30,
-          mass: 0.5
-        }}
-      />
-
-      <motion.div
-        ref={followerRef}
         className="fixed left-0 top-0 pointer-events-none z-[9998]"
         style={{
-          width: '36px',
-          height: '36px',
-          borderRadius: '50%',
-          border: '1.5px solid rgba(255, 255, 255, 0.45)',
-          background: 'rgba(255, 255, 255, 0.04)',
-          backdropFilter: 'blur(3px)'
+          x: ringX,
+          y: ringY,
+          width: 28,
+          height: 28,
+          marginLeft: -14,
+          marginTop: -14,
+          borderRadius: '9999px',
+          border: '1px solid rgba(255, 255, 255, 0.45)',
+          background: 'rgba(255, 255, 255, 0.03)',
+          boxShadow: '0 0 18px rgba(255, 255, 255, 0.08)',
+          backdropFilter: 'blur(2px)'
         }}
         animate={{
-          scale: isClicking ? 0.92 : isHovering ? 1.18 : 1,
           opacity: isVisible ? 1 : 0,
-          borderColor: isHovering ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.45)',
-          backgroundColor: isHovering ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.04)'
+          scale: isClicking ? 0.9 : isHovering ? 1.2 : 1,
+          borderColor: isHovering ? 'rgba(255, 255, 255, 0.75)' : 'rgba(255, 255, 255, 0.45)',
+          backgroundColor: isHovering ? 'rgba(255, 255, 255, 0.06)' : 'rgba(255, 255, 255, 0.03)'
         }}
-        transition={{
-          type: 'spring',
-          stiffness: 300,
-          damping: 30,
-          mass: 0.8
-        }}
+        transition={{ type: 'spring', stiffness: 380, damping: 28 }}
       />
 
       <motion.div
-        className="fixed pointer-events-none z-[9997]"
+        className="fixed left-0 top-0 pointer-events-none z-[9999]"
         style={{
-          left: glowPosition.x - GLOW_OFFSET,
-          top: glowPosition.y - GLOW_OFFSET,
-          width: '60px',
-          height: '60px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 72%)'
+          x: dotX,
+          y: dotY,
+          width: 6,
+          height: 6,
+          marginLeft: -3,
+          marginTop: -3,
+          borderRadius: '9999px',
+          background: 'rgba(255, 255, 255, 0.96)',
+          boxShadow: '0 0 10px rgba(255, 255, 255, 0.35)'
         }}
         animate={{
-          opacity: isVisible && isHovering ? 1 : 0,
-          scale: isVisible && isHovering ? 1 : 0.6
+          opacity: isVisible ? 1 : 0,
+          scale: isClicking ? 0.85 : 1
         }}
-        transition={{ duration: 0.18 }}
+        transition={{ type: 'spring', stiffness: 700, damping: 40 }}
       />
     </>
   )
