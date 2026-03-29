@@ -61,10 +61,28 @@ const projects = [
     id: 8,
     title: 'Spark Soul',
     category: 'Websites',
-    description: 'Modern spiritual wellness platform built with React. Clean UI with smooth animations.',
-    image: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=600&fit=crop',
+    description: 'Modern spiritual wellness platform built with React. Features a clean, calming UI with smooth animations, guided meditation sections, and an inspiring design that connects users to mindfulness and inner peace.',
+    image: '/images/spark soul.webp',
     tags: ['Website', 'React', 'UI/UX'],
     websiteUrl: 'https://spark-soul.vercel.app/'
+  },
+  {
+    id: 13,
+    title: 'Shri Paramhans International',
+    category: 'Websites',
+    description: 'Professional website for Shri Paramhans International — a spiritual and cultural organization. The site features a serene design with information about their mission, events, and teachings, built to reach a global audience.',
+    image: '/images/shriparamhansinternational.webp',
+    tags: ['Website', 'Spiritual', 'Organization'],
+    websiteUrl: 'http://shriparamhansinternational.com/'
+  },
+  {
+    id: 14,
+    title: 'DogPetel - Pet Care & Services',
+    category: 'Websites',
+    description: 'Comprehensive pet care platform offering veterinary services, pet supplies, and care tips. Features include appointment booking, pet profiles, and community forums for pet lovers.',
+    image: '/images/dog petel.webp',
+    tags: ['Website', 'Pet Care', 'E-commerce'],
+    websiteUrl: 'https://dogpetel.vercel.app/'
   },
   // --- Additional design projects ---
   {
@@ -105,7 +123,7 @@ export default projects
 
 // Featured projects for Home page (2 websites + 1 poster)
 export const featuredProjects = [
-  projects.find(p => p.id === 8), // Spark Soul website
-  projects.find(p => p.id === 2), // Cake Crush poster
-  projects.find(p => p.id === 4)  // Gym Logo
+  projects.find(p => p.id === 8),  // Spark Soul website
+  projects.find(p => p.id === 14), // DogPetel website
+  projects.find(p => p.id === 2)   // Cake Crush poster
 ]
