@@ -1,94 +1,125 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
+const CURSOR_OFFSET = 6
+const FOLLOWER_OFFSET = 20
+const GLOW_OFFSET = 30
+
+const isInteractiveTarget = (target) => {
+  if (!(target instanceof HTMLElement)) return false
+
+  return Boolean(
+    target.closest('button') ||
+    target.closest('a') ||
+    target.closest('input') ||
+    target.closest('textarea') ||
+    target.closest('select') ||
+    target.closest('[role="button"]') ||
+    target.closest('[role="link"]') ||
+    target.closest('.cursor-hover')
+  )
+}
+
 const CustomCursor = () => {
   const cursorRef = useRef(null)
   const followerRef = useRef(null)
-  const targetRef = useRef({ x: 0, y: 0 })
-  const followerRefPosition = useRef({ x: 0, y: 0 })
   const animationFrameRef = useRef(null)
+  const targetPositionRef = useRef({ x: -100, y: -100 })
+  const followerPositionRef = useRef({ x: -100, y: -100 })
+
+  const [isMounted, setIsMounted] = useState(false)
+  const [supportsHover, setSupportsHover] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
   const [isClicking, setIsClicking] = useState(false)
-  const [isVisible, setIsVisible] = useState(false)
-  const [supportsHover, setSupportsHover] = useState(false)
+  const [glowPosition, setGlowPosition] = useState({ x: -100, y: -100 })
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(hover: hover)')
-    const handleChange = () => setSupportsHover(mediaQuery.matches)
-
-    handleChange()
-    mediaQuery.addEventListener?.('change', handleChange)
-
-    return () => {
-      mediaQuery.removeEventListener?.('change', handleChange)
-    }
+    setIsMounted(true)
   }, [])
 
   useEffect(() => {
-    if (!supportsHover) return undefined
+    if (!isMounted) return undefined
 
-    const updateCursor = (event) => {
-      targetRef.current = { x: event.clientX, y: event.clientY }
+    const mediaQuery = window.matchMedia('(hover: hover) and (pointer: fine)')
+    const updateCapability = () => setSupportsHover(mediaQuery.matches)
+
+    updateCapability()
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', updateCapability)
+      return () => mediaQuery.removeEventListener('change', updateCapability)
+    }
+
+    mediaQuery.addListener(updateCapability)
+    return () => mediaQuery.removeListener(updateCapability)
+  }, [isMounted])
+
+  useEffect(() => {
+    if (!isMounted || !supportsHover) return undefined
+
+    const updatePointer = (event) => {
+      const nextPosition = { x: event.clientX, y: event.clientY }
+      targetPositionRef.current = nextPosition
+      setGlowPosition(nextPosition)
       setIsVisible(true)
     }
 
-    const animateFollower = () => {
+    const handlePointerOver = (event) => {
+      setIsHovering(isInteractiveTarget(event.target))
+    }
+
+    const handlePointerDown = () => setIsClicking(true)
+    const handlePointerUp = () => setIsClicking(false)
+    const handlePointerLeave = () => setIsVisible(false)
+    const handlePointerEnter = () => setIsVisible(true)
+    const handleWindowBlur = () => {
+      setIsVisible(false)
+      setIsClicking(false)
+    }
+
+    const animate = () => {
       if (cursorRef.current && followerRef.current) {
-        const { x, y } = targetRef.current
-        const follower = followerRefPosition.current
+        const target = targetPositionRef.current
+        const follower = followerPositionRef.current
 
-        cursorRef.current.style.transform = `translate3d(${x - 6}px, ${y - 6}px, 0)`
+        cursorRef.current.style.transform = `translate3d(${target.x - CURSOR_OFFSET}px, ${target.y - CURSOR_OFFSET}px, 0)`
 
-        follower.x += (x - 20 - follower.x) * 0.16
-        follower.y += (y - 20 - follower.y) * 0.16
+        follower.x += (target.x - FOLLOWER_OFFSET - follower.x) * 0.18
+        follower.y += (target.y - FOLLOWER_OFFSET - follower.y) * 0.18
 
         followerRef.current.style.transform = `translate3d(${follower.x}px, ${follower.y}px, 0)`
       }
 
-      animationFrameRef.current = window.requestAnimationFrame(animateFollower)
+      animationFrameRef.current = window.requestAnimationFrame(animate)
     }
 
-    const handleMouseOver = (event) => {
-      const target = event.target
-      const isInteractive = target.tagName === 'BUTTON' ||
-        target.tagName === 'A' ||
-        target.classList.contains('cursor-hover') ||
-        target.closest('button') ||
-        target.closest('a') ||
-        target.closest('.cursor-hover')
+    document.addEventListener('pointermove', updatePointer, { passive: true })
+    document.addEventListener('pointerover', handlePointerOver, { passive: true })
+    document.addEventListener('pointerdown', handlePointerDown)
+    document.addEventListener('pointerup', handlePointerUp)
+    document.addEventListener('pointerleave', handlePointerLeave)
+    document.addEventListener('pointerenter', handlePointerEnter)
+    window.addEventListener('blur', handleWindowBlur)
 
-      setIsHovering(Boolean(isInteractive))
-    }
-
-    const handleMouseDown = () => setIsClicking(true)
-    const handleMouseUp = () => setIsClicking(false)
-    const handleMouseLeave = () => setIsVisible(false)
-    const handleMouseEnter = () => setIsVisible(true)
-
-    document.addEventListener('mousemove', updateCursor, { passive: true })
-    document.addEventListener('mouseover', handleMouseOver, { passive: true })
-    document.addEventListener('mousedown', handleMouseDown)
-    document.addEventListener('mouseup', handleMouseUp)
-    document.addEventListener('mouseleave', handleMouseLeave)
-    document.addEventListener('mouseenter', handleMouseEnter)
-
-    animationFrameRef.current = window.requestAnimationFrame(animateFollower)
+    animationFrameRef.current = window.requestAnimationFrame(animate)
 
     return () => {
-      document.removeEventListener('mousemove', updateCursor)
-      document.removeEventListener('mouseover', handleMouseOver)
-      document.removeEventListener('mousedown', handleMouseDown)
-      document.removeEventListener('mouseup', handleMouseUp)
-      document.removeEventListener('mouseleave', handleMouseLeave)
-      document.removeEventListener('mouseenter', handleMouseEnter)
+      document.removeEventListener('pointermove', updatePointer)
+      document.removeEventListener('pointerover', handlePointerOver)
+      document.removeEventListener('pointerdown', handlePointerDown)
+      document.removeEventListener('pointerup', handlePointerUp)
+      document.removeEventListener('pointerleave', handlePointerLeave)
+      document.removeEventListener('pointerenter', handlePointerEnter)
+      window.removeEventListener('blur', handleWindowBlur)
 
       if (animationFrameRef.current) {
         window.cancelAnimationFrame(animationFrameRef.current)
       }
     }
-  }, [supportsHover])
+  }, [isMounted, supportsHover])
 
-  if (!supportsHover) {
+  if (!isMounted || !supportsHover) {
     return null
   }
 
@@ -96,7 +127,7 @@ const CustomCursor = () => {
     <>
       <motion.div
         ref={cursorRef}
-        className="fixed pointer-events-none z-[9999] mix-blend-mode-difference"
+        className="fixed left-0 top-0 pointer-events-none z-[9999] mix-blend-mode-difference"
         style={{
           width: '12px',
           height: '12px',
@@ -105,20 +136,20 @@ const CustomCursor = () => {
           boxShadow: '0 0 20px rgba(99, 102, 241, 0.5)'
         }}
         animate={{
-          scale: isClicking ? 0.6 : isHovering ? 1.5 : 1,
+          scale: isClicking ? 0.75 : isHovering ? 1.45 : 1,
           opacity: isVisible ? 1 : 0
         }}
         transition={{
           type: 'spring',
           stiffness: 500,
-          damping: 28,
+          damping: 30,
           mass: 0.5
         }}
       />
 
       <motion.div
         ref={followerRef}
-        className="fixed pointer-events-none z-[9998]"
+        className="fixed left-0 top-0 pointer-events-none z-[9998]"
         style={{
           width: '40px',
           height: '40px',
@@ -128,7 +159,7 @@ const CustomCursor = () => {
           backdropFilter: 'blur(4px)'
         }}
         animate={{
-          scale: isClicking ? 0.8 : isHovering ? 1.2 : 1,
+          scale: isClicking ? 0.88 : isHovering ? 1.15 : 1,
           opacity: isVisible ? 1 : 0,
           borderColor: isHovering ? 'rgba(139, 92, 246, 0.6)' : 'rgba(99, 102, 241, 0.3)'
         }}
@@ -140,23 +171,22 @@ const CustomCursor = () => {
         }}
       />
 
-      {isHovering && (
-        <motion.div
-          className="fixed pointer-events-none z-[9997]"
-          style={{
-            left: targetRef.current.x - 30,
-            top: targetRef.current.y - 30,
-            width: '60px',
-            height: '60px',
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%)'
-          }}
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.5 }}
-          transition={{ duration: 0.2 }}
-        />
-      )}
+      <motion.div
+        className="fixed pointer-events-none z-[9997]"
+        style={{
+          left: glowPosition.x - GLOW_OFFSET,
+          top: glowPosition.y - GLOW_OFFSET,
+          width: '60px',
+          height: '60px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%)'
+        }}
+        animate={{
+          opacity: isVisible && isHovering ? 1 : 0,
+          scale: isVisible && isHovering ? 1 : 0.6
+        }}
+        transition={{ duration: 0.18 }}
+      />
     </>
   )
 }
