@@ -190,7 +190,7 @@ const Contact = () => {
                       <div>
                         <label className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Full Name *</label>
                         <input
-                          type="text" name="name" placeholder="Sourav Verma"
+                          type="text" name="name" placeholder="Your Name"
                           value={formData.name} onChange={handleInputChange}
                           className={inputClass} required
                         />
@@ -198,7 +198,7 @@ const Contact = () => {
                       <div>
                         <label className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Email Address *</label>
                         <input
-                          type="email" name="email" placeholder="you@example.com"
+                          type="email" name="email" placeholder="Your Email"
                           value={formData.email} onChange={handleInputChange}
                           className={inputClass} required
                         />

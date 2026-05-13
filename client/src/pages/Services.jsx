@@ -58,9 +58,9 @@ const Services = () => {
         {
           from_name: fb.name,
           from_email: fb.email,
-          phone: 'N/A',
-          service: `⭐ FEEDBACK — Rating: ${fb.rating}/5`,
-          message: fb.comment
+          phone: 'N/A — Feedback Form',
+          service: `⭐ FEEDBACK — ${fb.rating}/5 Stars (${['','Poor','Fair','Good','Great','Excellent'][Number(fb.rating)]})`,
+          message: `Rating: ${fb.rating}/5 ⭐ — ${['','Poor','Fair','Good','Great','Excellent'][Number(fb.rating)]}\n\n${fb.comment}`
         },
         EMAILJS_PUBLIC_KEY
       )
@@ -322,12 +322,12 @@ const Services = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Your Name *</label>
-                    <input type="text" name="name" placeholder="John Doe"
+                    <input type="text" name="name" placeholder="Your Name"
                       value={fb.name} onChange={handleFb} className={inputClass} required />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Email Address *</label>
-                    <input type="email" name="email" placeholder="you@example.com"
+                    <input type="email" name="email" placeholder="Your Email"
                       value={fb.email} onChange={handleFb} className={inputClass} required />
                   </div>
                 </div>
