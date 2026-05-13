@@ -171,17 +171,17 @@ const Home = () => {
       {/* Stats Section */}
       <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <motion.div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8" {...brandAnimations.staggerContainer} {...viewportAnimations.fadeInUp}>
+          <motion.div className="grid grid-cols-3 gap-4 sm:gap-6 lg:gap-8" {...brandAnimations.staggerContainer} {...viewportAnimations.fadeInUp}>
             {[
               { value: counters.projects, label: 'Projects Completed', delay: 0.2 },
               { value: counters.clients, label: 'Happy Clients', delay: 0.4 },
               { value: counters.experience, label: 'Years Experience', delay: 0.6 }
             ].map(({ value, label, delay }) => (
-              <motion.div key={label} className="text-center glass rounded-xl sm:rounded-2xl p-6 sm:p-8 card-hover cursor-hover" {...brandAnimations.staggerItem} {...brandAnimations.cardHover} {...brandAnimations.glowHover}>
-                <motion.div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gradient mb-2" {...brandAnimations.counter} transition={{ delay }}>
+              <motion.div key={label} className="text-center glass rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 card-hover cursor-hover" {...brandAnimations.staggerItem} {...brandAnimations.cardHover} {...brandAnimations.glowHover}>
+                <motion.div className="text-2xl sm:text-3xl lg:text-5xl font-bold text-gradient mb-1 sm:mb-2" {...brandAnimations.counter} transition={{ delay }}>
                   {value}+
                 </motion.div>
-                <p className="text-gray-300 text-sm sm:text-base">{label}</p>
+                <p className="text-gray-300 text-xs sm:text-sm lg:text-base">{label}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -325,8 +325,7 @@ const Home = () => {
             <div className="flex-1 overflow-hidden">
               <motion.div
                 key={tIndex}
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
-                initial={{ x: direction > 0 ? 100 : -100, opacity: 0 }}
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"                initial={{ x: direction > 0 ? 100 : -100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
