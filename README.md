@@ -1,130 +1,76 @@
-Sourav Verma - Portfolio Website 🎨
-A modern and responsive portfolio website for graphic designer & web designer Sourav Verma, built with React and Vite. Designed to showcase creative work, services, and client projects with a clean and premium user experience.
-✨ Features
+# Sourav Verma - Portfolio Website 🎨
 
+A modern and responsive portfolio website for showcasing graphic design, UI/UX, branding, and web development projects by Sourav Verma.
 
-Modern and responsive UI
+## ✨ Features
 
+- Modern and clean UI design
+- Fully responsive on all devices
+- Smooth animations and transitions
+- Interactive portfolio showcase
+- Services section with pricing
+- Contact form with WhatsApp support
+- Fast and optimized performance
+- SEO-friendly structure
 
-Smooth animations and transitions
+## 🛠️ Tech Stack
 
+- React.js
+- Vite
+- Tailwind CSS
+- Framer Motion
+- React Router DOM
+- Axios
 
-Portfolio showcase with project filtering
+## 🚀 Getting Started
 
+### Clone the Repository
+```bash
+git clone https://github.com/yourusername/sourav-portfolio.git
+cd sourav-portfolio
+```
 
-Services section with pricing
-
-
-Contact form with WhatsApp integration
-
-
-Mobile-friendly design
-
-
-Fast performance with Vite
-
-
-Clean and minimal layout
-
-
-SEO-friendly structure
-
-
-🛠️ Tech Stack
-Frontend
-
-
-React 18
-
-
-Vite
-
-
-Tailwind CSS
-
-
-Framer Motion
-
-
-React Router DOM
-
-
-Axios
-
-
-React Hot Toast
-
-
-Tools & Design
-
-
-Figma
-
-
-Canva
-
-
-Photoshop
-
-
-Illustrator
-
-
-🚀 Getting Started
-Clone the Repository
-git clone https://github.com/yourusername/sourav-portfolio.gitcd sourav-portfolio
-Install Dependencies
+### Install Dependencies
+```bash
 npm install
-Run Development Server
+```
+
+### Start Development Server
+```bash
 npm run dev
-Build for Production
+```
+
+### Build for Production
+```bash
 npm run build
-📁 Project Structure
-sourav-portfolio/├── public/├── src/│   ├── components/│   ├── pages/│   ├── assets/│   ├── utils/│   └── main.jsx├── package.json└── vite.config.js
-🌐 Live Preview
+```
 
+## 📁 Project Structure
 
-Website: SV_DESIZNS Portfolio
+```bash
+src/
+├── components/
+├── pages/
+├── assets/
+├── utils/
+└── main.jsx
+```
 
+## 🌐 Live Website
 
-Instagram: @sv_desizns
+- Portfolio: (https://svdesizns.vercel.app/?utm_source=chatgpt.com)
+- Instagram: [@sv_desizns](https://instagram.com/sv_desizns?)
 
+## 👨‍💻 About Me
 
-🎨 Design Highlights
+Hi, I'm Sourav Verma — a Graphic Designer, UI/UX Designer, and Frontend Web Developer passionate about creating modern digital experiences and creative brand visuals.
 
+## 📬 Contact
 
-Glassmorphism inspired UI
+- Email: souravverma5436@gmail.com
+- Portfolio: (https://svdesizns.vercel.app/)
+- Instagram: [@sv_desizns](https://instagram.com/sv_desizns)
 
-
-Smooth scrolling experience
-
-
-Premium dark theme
-
-
-Fully responsive layouts
-
-
-Creative portfolio presentation
-
-
-Interactive hover effects
-
-
-👨‍💻 About Me
-Hi, I'm Sourav Verma, a UI/UX Designer, Graphic Designer, and Frontend Web Developer from Punjab, India.
-I create modern websites, brand identities, social media creatives, posters, and user-focused digital experiences.
-📬 Contact
-
-
-Email: souravverma5436@gmail.com
-
-
-Portfolio: SV_DESIZNS Website
-
-
-Instagram: SV_DESIZNS Instagram
-
-
+---
 
 ⭐ If you like this project, consider giving it a star on GitHub!
