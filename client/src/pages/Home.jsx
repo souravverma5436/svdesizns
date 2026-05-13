@@ -7,40 +7,46 @@ import { featuredProjects } from '../data/projects'
 const TESTIMONIALS = [
   {
     name: 'Spark Soul',
-    role: 'Spiritual Wellness Platform',
+    person: 'Sejal Kalra',
+    role: 'Founder, Spark Soul',
     image: '/images/spark soul.webp',
     text: 'Sourav delivered an incredibly calming and modern website that perfectly captures our brand essence. The smooth animations and clean UI exceeded our expectations.',
     websiteUrl: 'https://spark-soul.vercel.app/'
   },
   {
     name: 'DogPetel',
-    role: 'Pet Care & Services',
+    person: 'Komal Arora',
+    role: 'CEO, DogPetel',
     image: '/images/dog petel.webp',
     text: 'The platform Sourav built for us is intuitive and visually stunning. Our users love the experience and our engagement has grown significantly since launch.',
     websiteUrl: 'https://dogpetel.vercel.app/'
   },
   {
     name: 'Shri Paramhans International',
-    role: 'Spiritual & Cultural Organization',
+    person: 'Balwinder Singh',
+    role: 'Director, Shri Paramhans International',
     image: '/images/shriparamhansinternational.webp',
     text: 'A serene and professional website that truly represents our mission. Sourav understood our vision and translated it beautifully into a global-ready platform.',
     websiteUrl: 'http://shriparamhansinternational.com/'
   },
   {
     name: 'Cake Crush',
-    role: 'Bakery Brand',
+    person: 'Neha Garg',
+    role: 'Owner, Cake Crush Bakery',
     image: '/images/cake-crush.jpg',
     text: 'The promotional poster Sourav designed for us was vibrant and eye-catching. It drove real footfall and perfectly matched our brand personality.'
   },
   {
     name: 'RK Sports',
-    role: 'Sports Brand',
+    person: 'Rohit Kumar',
+    role: 'Founder, RK Sports',
     image: '/images/rk-sports.jpg',
     text: 'Our new logo is bold, dynamic, and exactly what we needed. Sourav nailed the energy of our brand in the very first revision.'
   },
   {
     name: 'Riya Tuition Classes',
-    role: 'Educational Institute',
+    person: 'Riya Rattan',
+    role: 'Director, Riya Tuition Classes',
     image: '/images/riya-tuition.jpg',
     text: 'The complete branding package gave our institute a professional identity. Parents and students immediately noticed the difference. Highly recommended!'
   }
@@ -383,20 +389,22 @@ const Home = () => {
                           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                         </div>
                         <div className="min-w-0">
+                          {/* Person name — most prominent */}
+                          <p className="font-bold text-white text-sm truncate">{testimonial.person}</p>
+                          {/* Company name with optional link */}
                           {testimonial.websiteUrl ? (
                             <a
                               href={testimonial.websiteUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="block font-semibold text-white hover:text-primary transition-colors text-sm truncate"
+                              className="block text-primary hover:text-secondary transition-colors text-xs truncate"
                             >
-                              {testimonial.name}
-                              <span className="ml-1 text-primary/70 text-xs">↗</span>
+                              {testimonial.name} ↗
                             </a>
                           ) : (
-                            <p className="font-semibold text-white text-sm truncate">{testimonial.name}</p>
+                            <p className="text-primary/80 text-xs truncate">{testimonial.name}</p>
                           )}
-                          <p className="text-gray-500 text-xs mt-0.5 truncate">{testimonial.role}</p>
+                          <p className="text-gray-500 text-[11px] mt-0.5 truncate">{testimonial.role}</p>
                         </div>
                       </div>
 
