@@ -14,7 +14,8 @@ const Portfolio = () => {
     { id: 'Branding', name: 'Branding' },
     { id: 'Social Media Creatives', name: 'Social Media' },
     { id: 'Posters & Ads', name: 'Posters & Ads' },
-    { id: 'Websites', name: 'Websites' }
+    { id: 'Websites', name: 'Websites' },
+    { id: 'Automotive & Luxury', name: 'Automotive & Luxury' }
   ]
 
   const filteredProjects = selectedCategory === 'all'
@@ -130,28 +131,42 @@ const Portfolio = () => {
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="text-white font-semibold text-sm sm:text-base bg-black/50 px-4 py-2 rounded-full backdrop-blur-sm">
+                    {/* Persistent bottom gradient so title is always readable */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                    {/* Category badge — top right */}
+                    <div className="absolute top-3 right-3">
+                      <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wide bg-black/50 backdrop-blur-sm border border-white/15 text-white/90">
+                        {project.category}
+                      </span>
+                    </div>
+
+                    {/* Title always visible at bottom */}
+                    <div className="absolute bottom-0 left-0 right-0 px-4 pb-3 pt-6">
+                      <h3 className="text-white font-bold text-base sm:text-lg leading-tight drop-shadow-lg">
+                        {project.title}
+                      </h3>
+                    </div>
+
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30">
+                      <span className="text-white font-semibold text-sm bg-primary/80 px-4 py-2 rounded-full backdrop-blur-sm shadow-lg">
                         View Project
                       </span>
                     </div>
                   </div>
 
                   {/* Project Info */}
-                  <div className="p-4 sm:p-6">
-                    <h3 className="text-lg sm:text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-400 mb-3 sm:mb-4 text-sm sm:text-base line-clamp-2">
+                  <div className="p-4 sm:p-5">
+                    <p className="text-gray-400 mb-3 text-sm line-clamp-2">
                       {project.description}
                     </p>
-                    <div className="flex flex-wrap gap-1 sm:gap-2">
+                    <div className="flex flex-wrap gap-1.5">
                       {project.tags?.slice(0, 3).map((tag) => (
-                        <span key={tag} className="px-2 sm:px-3 py-1 bg-dark-lighter rounded-full text-xs sm:text-sm text-gray-300">
+                        <span key={tag} className="px-2 sm:px-3 py-0.5 bg-primary/10 border border-primary/20 rounded-full text-xs text-primary/90">
                           {tag}
                         </span>
                       ))}

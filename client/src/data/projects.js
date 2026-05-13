@@ -116,6 +116,80 @@ const projects = [
     description: 'Complete brand identity for a premium restaurant including logo, menu design, and collateral.',
     image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop',
     tags: ['Branding', 'Restaurant', 'Identity']
+  },
+
+  // --- Automotive & Luxury designs ---
+  {
+    id: 15,
+    title: 'Audi R8 – Supercar Poster',
+    category: 'Automotive & Luxury',
+    description: 'High-impact visual design for the iconic Audi R8 supercar. The composition blends dramatic lighting, sharp angles, and a dark cinematic backdrop to capture the raw power and precision engineering that defines the R8 legacy.',
+    image: '/images/audi r8.jpg',
+    tags: ['Automotive', 'Poster', 'Photoshop']
+  },
+  {
+    id: 16,
+    title: 'BMW – Luxury Auto Visual',
+    category: 'Automotive & Luxury',
+    description: 'Sleek promotional visual for BMW showcasing the brand\'s signature blend of performance and elegance. Clean lines, premium color grading, and bold typography communicate the ultimate driving machine experience.',
+    image: '/images/BMW 1.jpg',
+    tags: ['Automotive', 'BMW', 'Branding']
+  },
+  {
+    id: 17,
+    title: 'Ferrari – Speed & Passion',
+    category: 'Automotive & Luxury',
+    description: 'A fiery, adrenaline-charged design tribute to Ferrari\'s racing heritage. Deep reds, dynamic motion blur effects, and aggressive composition evoke the passion and speed that have made Ferrari an eternal symbol of excellence.',
+    image: '/images/ferrari.jpg',
+    tags: ['Automotive', 'Ferrari', 'Poster']
+  },
+  {
+    id: 18,
+    title: 'Lamborghini – Raging Bull',
+    category: 'Automotive & Luxury',
+    description: 'Bold and aggressive visual design inspired by Lamborghini\'s iconic raging bull identity. The design uses sharp geometric forms, electric color accents, and dramatic perspective to mirror the car\'s uncompromising performance DNA.',
+    image: '/images/lamborghini.jpg',
+    tags: ['Automotive', 'Lamborghini', 'Design']
+  },
+  {
+    id: 19,
+    title: 'Louis Vuitton – Luxury Brand Art',
+    category: 'Automotive & Luxury',
+    description: 'Sophisticated luxury brand artwork inspired by Louis Vuitton\'s timeless aesthetic. The design merges the iconic LV monogram with contemporary visual storytelling — rich textures, gold tones, and refined typography that speak the language of high fashion.',
+    image: '/images/Louis Vuitton.jpg',
+    tags: ['Luxury', 'Fashion', 'Brand Art']
+  },
+  {
+    id: 20,
+    title: 'Necklace – Jewellery Visual',
+    category: 'Automotive & Luxury',
+    description: 'Elegant jewellery product visual designed to highlight the craftsmanship and allure of a premium necklace. Soft studio lighting, macro-level detail, and a minimalist backdrop bring out the brilliance of the piece — perfect for luxury retail and e-commerce.',
+    image: '/images/necklace.png',
+    tags: ['Jewellery', 'Product', 'Luxury']
+  },
+  {
+    id: 21,
+    title: 'McLaren – Precision in Motion',
+    category: 'Automotive & Luxury',
+    description: 'A cutting-edge visual design for McLaren that captures the brand\'s obsession with aerodynamics and speed. Papaya orange accents, carbon-fibre textures, and a futuristic layout reflect McLaren\'s Formula 1 roots and road-car excellence.',
+    image: '/images/mclaren.jpg',
+    tags: ['Automotive', 'McLaren', 'Poster']
+  },
+  {
+    id: 22,
+    title: 'Ford Mustang – American Muscle',
+    category: 'Automotive & Luxury',
+    description: 'A powerful tribute to the Ford Mustang\'s legendary muscle car heritage. Bold typography, deep shadows, and a high-contrast color palette channel the raw energy and freedom that the Mustang has represented for over five decades.',
+    image: '/images/mustang.jpg',
+    tags: ['Automotive', 'Mustang', 'Poster']
+  },
+  {
+    id: 23,
+    title: 'Mahindra Thar – Off-Road Spirit',
+    category: 'Automotive & Luxury',
+    description: 'Rugged and adventurous visual design for the Mahindra Thar — India\'s most iconic off-roader. Earthy tones, dust-trail effects, and a bold composition capture the Thar\'s fearless personality and its promise to conquer any terrain.',
+    image: '/images/thar.jpg',
+    tags: ['Automotive', 'Thar', 'Off-Road']
   }
 ]
 
