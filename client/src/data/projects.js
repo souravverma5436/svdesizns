@@ -124,7 +124,7 @@ const projects = [
     title: 'Audi R8 – Supercar Poster',
     category: 'Automotive & Luxury',
     description: 'High-impact visual design for the iconic Audi R8 supercar. The composition blends dramatic lighting, sharp angles, and a dark cinematic backdrop to capture the raw power and precision engineering that defines the R8 legacy.',
-    image: '/images/audi r8.jpg',
+    image: '/images/audi r8.webp',
     tags: ['Automotive', 'Poster', 'Photoshop']
   },
   {
@@ -132,7 +132,7 @@ const projects = [
     title: 'BMW – Luxury Auto Visual',
     category: 'Automotive & Luxury',
     description: 'Sleek promotional visual for BMW showcasing the brand\'s signature blend of performance and elegance. Clean lines, premium color grading, and bold typography communicate the ultimate driving machine experience.',
-    image: '/images/BMW 1.jpg',
+    image: '/images/BMW 1.webp',
     tags: ['Automotive', 'BMW', 'Branding']
   },
   {
@@ -140,7 +140,7 @@ const projects = [
     title: 'Ferrari – Speed & Passion',
     category: 'Automotive & Luxury',
     description: 'A fiery, adrenaline-charged design tribute to Ferrari\'s racing heritage. Deep reds, dynamic motion blur effects, and aggressive composition evoke the passion and speed that have made Ferrari an eternal symbol of excellence.',
-    image: '/images/ferrari.jpg',
+    image: '/images/ferrari.webp',
     tags: ['Automotive', 'Ferrari', 'Poster']
   },
   {
@@ -148,15 +148,23 @@ const projects = [
     title: 'Lamborghini – Raging Bull',
     category: 'Automotive & Luxury',
     description: 'Bold and aggressive visual design inspired by Lamborghini\'s iconic raging bull identity. The design uses sharp geometric forms, electric color accents, and dramatic perspective to mirror the car\'s uncompromising performance DNA.',
-    image: '/images/lamborghini.jpg',
+    image: '/images/Lambo.webp',
     tags: ['Automotive', 'Lamborghini', 'Design']
+  },
+  {
+    id: 24,
+    title: 'Lamborghini – Aventador Poster',
+    category: 'Automotive & Luxury',
+    description: 'A cinematic poster design celebrating the Lamborghini Aventador — one of the most dramatic supercars ever built. Striking low-angle perspective, neon-lit atmosphere, and razor-sharp detailing make this a standout piece of automotive art.',
+    image: '/images/lamborghini.webp',
+    tags: ['Automotive', 'Lamborghini', 'Poster']
   },
   {
     id: 19,
     title: 'Louis Vuitton – Luxury Brand Art',
     category: 'Automotive & Luxury',
     description: 'Sophisticated luxury brand artwork inspired by Louis Vuitton\'s timeless aesthetic. The design merges the iconic LV monogram with contemporary visual storytelling — rich textures, gold tones, and refined typography that speak the language of high fashion.',
-    image: '/images/Louis Vuitton.jpg',
+    image: '/images/Louis Vuitton.webp',
     tags: ['Luxury', 'Fashion', 'Brand Art']
   },
   {
@@ -164,7 +172,7 @@ const projects = [
     title: 'Necklace – Jewellery Visual',
     category: 'Automotive & Luxury',
     description: 'Elegant jewellery product visual designed to highlight the craftsmanship and allure of a premium necklace. Soft studio lighting, macro-level detail, and a minimalist backdrop bring out the brilliance of the piece — perfect for luxury retail and e-commerce.',
-    image: '/images/necklace.png',
+    image: '/images/necklace.webp',
     tags: ['Jewellery', 'Product', 'Luxury']
   },
   {
@@ -172,7 +180,7 @@ const projects = [
     title: 'McLaren – Precision in Motion',
     category: 'Automotive & Luxury',
     description: 'A cutting-edge visual design for McLaren that captures the brand\'s obsession with aerodynamics and speed. Papaya orange accents, carbon-fibre textures, and a futuristic layout reflect McLaren\'s Formula 1 roots and road-car excellence.',
-    image: '/images/mclaren.jpg',
+    image: '/images/mclaren.webp',
     tags: ['Automotive', 'McLaren', 'Poster']
   },
   {
@@ -180,7 +188,7 @@ const projects = [
     title: 'Ford Mustang – American Muscle',
     category: 'Automotive & Luxury',
     description: 'A powerful tribute to the Ford Mustang\'s legendary muscle car heritage. Bold typography, deep shadows, and a high-contrast color palette channel the raw energy and freedom that the Mustang has represented for over five decades.',
-    image: '/images/mustang.jpg',
+    image: '/images/mustang.webp',
     tags: ['Automotive', 'Mustang', 'Poster']
   },
   {
@@ -188,8 +196,16 @@ const projects = [
     title: 'Mahindra Thar – Off-Road Spirit',
     category: 'Automotive & Luxury',
     description: 'Rugged and adventurous visual design for the Mahindra Thar — India\'s most iconic off-roader. Earthy tones, dust-trail effects, and a bold composition capture the Thar\'s fearless personality and its promise to conquer any terrain.',
-    image: '/images/thar.jpg',
+    image: '/images/thar.webp',
     tags: ['Automotive', 'Thar', 'Off-Road']
+  },
+  {
+    id: 25,
+    title: 'Freelancer Cover – Personal Brand',
+    category: 'Branding',
+    description: 'A professional freelancer profile cover design crafted to make a strong first impression. Bold personal branding, clean layout, and a modern visual identity that communicates skill, credibility, and creative expertise at a glance.',
+    image: '/images/Freelancer cover.webp',
+    tags: ['Branding', 'Freelance', 'Cover Design']
   }
 ]
 
