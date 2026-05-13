@@ -90,7 +90,7 @@ const projects = [
     title: 'Tech Startup Logo',
     category: 'Logo Design',
     description: 'Modern and minimalist logo design for a technology startup with clean lines and contemporary typography.',
-    image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&h=600&fit=crop',
+    image: '/images/tech startup logo.webp',
     tags: ['Logo', 'Tech', 'Minimalist']
   },
   {
@@ -98,7 +98,7 @@ const projects = [
     title: 'Social Media Campaign',
     category: 'Social Media Creatives',
     description: 'Engaging social media graphics for a fashion brand, boosting engagement and brand awareness.',
-    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=600&fit=crop',
+    image: '/images/social media campaign.webp',
     tags: ['Social Media', 'Fashion', 'Campaign']
   },
   {
@@ -106,7 +106,7 @@ const projects = [
     title: 'Event Poster Design',
     category: 'Posters & Ads',
     description: 'Vibrant event poster design with bold typography and striking visual hierarchy.',
-    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=600&fit=crop',
+    image: '/images/event poster design.webp',
     tags: ['Poster', 'Event', 'Typography']
   },
   {
