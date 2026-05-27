@@ -24,8 +24,18 @@ const Contact = () => {
   const [submitted, setSubmitted] = useState(false)
 
   const services = [
-    'Logo Design', 'Branding', 'Social Media Creatives',
-    'Posters & Ads', 'Website Design & Development', 'Complete Package', 'Other'
+    'Logo Design',
+    'Branding',
+    'Social Media Design',
+    'Poster / Banner Design',
+    'Website Design',
+    'Complete Package',
+    'Reels Editing',
+    'Menu Design',
+    'YouTube Thumbnail Design',
+    'Landing Page Design',
+    'Printing Solutions',
+    'Other'
   ]
 
   const contactMethods = [
