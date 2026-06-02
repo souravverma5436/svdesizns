@@ -206,6 +206,15 @@ const projects = [
     description: 'A professional freelancer profile cover design crafted to make a strong first impression. Bold personal branding, clean layout, and a modern visual identity that communicates skill, credibility, and creative expertise at a glance.',
     image: '/images/Freelancer cover.webp',
     tags: ['Branding', 'Freelance', 'Cover Design']
+  },
+  {
+    id: 26,
+    title: 'SV Desizns – Brand Logo',
+    category: 'Logo Design',
+    description: 'The official logo design for SV Desizns — my own creative design brand. This logo reflects the essence of modern, premium design: bold identity, clean geometry, and a timeless style that represents creativity, professionalism, and a passion for visual storytelling. Every element was crafted to make SV Desizns instantly recognizable across digital and print mediums.',
+    image: '/images/DP SV DESIGN.jpg.webp',
+    tags: ['Logo', 'Personal Brand', 'Identity'],
+    instagramUrl: 'https://www.instagram.com/sv_desizns/'
   }
 ]
 
