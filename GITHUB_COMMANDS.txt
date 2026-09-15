@@ -1,0 +1,285 @@
+╔══════════════════════════════════════════════════════════════════╗
+║          GITHUB UPLOAD COMMANDS — SV DESIZNS PORTFOLIO          ║
+║          Repository: souravverma5436/svdesizns                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+Open PowerShell / Terminal inside the project folder:
+  D:\WEB\sourav-portfolio
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  STEP 1 — CHECK STATUS (what files changed)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  git status
+
+  → Shows which files are modified, new, or deleted.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  STEP 2 — ADD FILES (stage your changes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Add ALL changed files at once:
+    git add .
+
+  Add a SPECIFIC file:
+    git add client/src/data/projects.js
+    git add client/src/pages/Home.jsx
+
+  Add a NEW IMAGE (use -f if image folder was in .gitignore):
+    git add -f "client/public/images/your image name.webp"
+
+  Add MULTIPLE specific files:
+    git add client/src/pages/Contact.jsx client/src/pages/Services.jsx
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  STEP 3 — COMMIT (save your changes with a message)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  git commit -m "your message here"
+
+  Examples:
+    git commit -m "feat: add new project to portfolio"
+    git commit -m "fix: update contact page"
+    git commit -m "feat: add new images"
+    git commit -m "update: services pricing updated"
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  STEP 4 — PUSH (upload to GitHub)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  git push origin main
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  QUICK UPLOAD — ALL IN ONE (most common use)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  git add .
+  git commit -m "update: describe what you changed"
+  git push origin main
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ADDING NEW IMAGES (important — images need force add)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  1. Copy your image into:
+       D:\WEB\sourav-portfolio\client\public\images\
+
+  2. Run these commands:
+       git add -f "client/public/images/your image.webp"
+       git add client/src/data/projects.js
+       git commit -m "feat: add new image - image name"
+       git push origin main
+
+  NOTE: Use -f (force) because the images folder was previously
+        in .gitignore. This is already fixed but -f is safe to use.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  OTHER USEFUL COMMANDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  See commit history:
+    git log --oneline
+
+  Pull latest changes from GitHub to your PC:
+    git pull origin main
+
+  If push is rejected (remote has changes you don't have):
+    git pull --rebase origin main
+    git push origin main
+
+  Check which remote (GitHub URL) is connected:
+    git remote -v
+
+  See what branch you are on:
+    git branch
+
+  Undo last commit (keeps your file changes):
+    git reset --soft HEAD~1
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  PROJECT INFO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Local folder  :  D:\WEB\sourav-portfolio
+  GitHub repo   :  https://github.com/souravverma5436/svdesizns
+  Live website  :  https://svdesizns.vercel.app
+  Branch        :  main
+  Remote name   :  origin
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  TYPICAL WORKFLOW EXAMPLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  You made changes to the website. Now upload them:
+
+    git status
+    git add .
+    git commit -m "feat: added new project photos"
+    git push origin main
+
+  Done! Vercel will automatically redeploy the live site.
+
+══════════════════════════════════════════════════════════════════
+
+
+╔══════════════════════════════════════════════════════════════════╗
+║        HOW TO RUN THIS PROJECT ON ANOTHER SYSTEM (LOCALHOST)    ║
+╚══════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  REQUIREMENTS — Install these first on the new system
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  1. Node.js (version 18 or higher)
+       Download from: https://nodejs.org
+       After installing, verify with:
+         node --version
+         npm --version
+
+  2. Git (optional but recommended)
+       Download from: https://git-scm.com
+       After installing, verify with:
+         git --version
+
+  3. A code editor (recommended: VS Code)
+       Download from: https://code.visualstudio.com
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  METHOD 1 — You sent the project as a ZIP file
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  STEP 1: Extract the ZIP file anywhere on your system.
+          Example: C:\Projects\sourav-portfolio
+
+  STEP 2: Open PowerShell or Terminal and go to the client folder:
+            cd C:\Projects\sourav-portfolio\client
+
+  STEP 3: Install all required packages:
+            npm install
+
+          (This reads package.json and downloads everything needed)
+          (Wait for it to finish — may take 1-2 minutes)
+
+  STEP 4: Create the .env file (for EmailJS to work):
+          Inside the client folder, create a file named:  .env
+          Add this content inside it:
+
+            VITE_EMAILJS_SERVICE_ID=your_service_id
+            VITE_EMAILJS_TEMPLATE_ID=your_template_id
+            VITE_EMAILJS_PUBLIC_KEY=your_public_key
+
+          NOTE: Get these values from your EmailJS account at
+                https://www.emailjs.com
+                (Contact form will not send emails without this)
+
+  STEP 5: Start the development server:
+            npm run dev
+
+  STEP 6: Open your browser and go to:
+            http://localhost:5173
+
+  Done! The website is now running locally.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  METHOD 2 — Clone directly from GitHub (recommended)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  STEP 1: Open PowerShell / Terminal on the new system.
+
+  STEP 2: Go to the folder where you want to save the project:
+            cd C:\Projects
+
+  STEP 3: Clone the project from GitHub:
+            git clone https://github.com/souravverma5436/svdesizns.git
+
+  STEP 4: Go into the project folder:
+            cd svdesizns
+
+  STEP 5: Go into the client folder:
+            cd client
+
+  STEP 6: Install all packages:
+            npm install
+
+  STEP 7: Create the .env file (same as Method 1, Step 4 above)
+
+  STEP 8: Start the dev server:
+            npm run dev
+
+  STEP 9: Open browser:
+            http://localhost:5173
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ALL COMMANDS IN ORDER (copy-paste ready)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  From ZIP:
+    cd path\to\extracted-folder\client
+    npm install
+    npm run dev
+
+  From GitHub clone:
+    git clone https://github.com/souravverma5436/svdesizns.git
+    cd svdesizns\client
+    npm install
+    npm run dev
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  IMPORTANT NOTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✔ NEVER share your .env file — it contains secret keys.
+    The .env file is in .gitignore so it is NOT uploaded to GitHub.
+    You must manually create it on every new system.
+
+  ✔ The node_modules folder is also NOT shared (it is in .gitignore).
+    Always run  npm install  after getting the project on a new system.
+
+  ✔ If you see errors after npm install, try:
+      npm install --legacy-peer-deps
+
+  ✔ If port 5173 is busy, Vite will use 5174 or 5175 automatically.
+    Check the terminal output to see the actual URL.
+
+  ✔ To stop the development server: press  Ctrl + C  in the terminal.
+
+  ✔ To build for production (creates deployable dist folder):
+      npm run build
+
+  ✔ To preview the production build locally:
+      npm run preview
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  FOLDER STRUCTURE (for reference)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  sourav-portfolio/
+  │
+  ├── client/                   ← Main project folder (work here)
+  │   ├── public/
+  │   │   └── images/           ← All project images go here
+  │   ├── src/
+  │   │   ├── components/       ← Navbar, Footer, etc.
+  │   │   ├── pages/            ← Home, About, Portfolio, Services, Contact
+  │   │   ├── data/             ← projects.js, services.js
+  │   │   └── index.css         ← Global styles
+  │   ├── .env                  ← Secret keys (create manually, NOT in GitHub)
+  │   ├── package.json          ← Project dependencies list
+  │   └── vite.config.js        ← Vite configuration
+  │
+  ├── GITHUB_COMMANDS.txt       ← This file
+  └── README.md
+
+══════════════════════════════════════════════════════════════════
