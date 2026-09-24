@@ -208,8 +208,18 @@ const projects = [
     tags: ['Branding', 'Freelance', 'Cover Design']
   },
   {
+    id: 28,
+    title: 'Petel Flex Board',
+    category: 'Printings',
+    description: 'High-quality flex board printing for Petel, featuring a professional layout and durable material. The board is designed for maximum visibility and brand impact, specifically crafted in a 3 ft x 2 ft size to fit perfectly in the intended display area.',
+    image: '/images/PETEL FLEX BOARD.jpeg',
+    tags: ['Printings', 'Flex Board', 'Advertising', 'Outdoor Signage'],
+    size: '3 ft x 2 ft'
+  },
+  {
     id: 26,
     title: 'SV Desizns – Brand Logo',
+
     category: 'Logo Design',
     description: 'The official logo design for SV Desizns — my own creative design brand. This logo reflects the essence of modern, premium design: bold identity, clean geometry, and a timeless style that represents creativity, professionalism, and a passion for visual storytelling. Every element was crafted to make SV Desizns instantly recognizable across digital and print mediums.',
     image: '/images/DP SV DESIGN.jpg.webp',

@@ -14,6 +14,7 @@ const Portfolio = () => {
     { id: 'Branding', name: 'Branding' },
     { id: 'Social Media Creatives', name: 'Social Media' },
     { id: 'Posters & Ads', name: 'Posters & Ads' },
+    { id: 'Printings', name: 'Printings' },
     { id: 'Websites', name: 'Websites' },
     { id: 'Automotive & Luxury', name: 'Automotive & Luxury' }
   ]
