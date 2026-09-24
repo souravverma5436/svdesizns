@@ -119,10 +119,10 @@ const Portfolio = () => {
                 <motion.div
                   key={project.id}
                   layout
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
                   className="glass rounded-xl sm:rounded-2xl overflow-hidden card-hover cursor-hover group"
                   onClick={() => openModal(project)}
                   whileHover={{ y: -10 }}
