@@ -228,12 +228,20 @@ const projects = [
   },
   {
     id: 27,
+<<<<<<< HEAD
     title: 'SV Desizns – Complete Branding & Services Poster',
     category: 'Branding',
     description: 'A complete promotional branding poster designed for SV DESIZNS, showcasing the brand\'s full range of creative, printing, branding, and digital solutions in one professional visual composition. The design combines the official SV DESIZNS identity with a premium black, white, and gold visual language — featuring branded products such as custom T-shirts, mugs, business cards, stickers, packaging, signage, banners, and promotional materials alongside the brand\'s professional printing setup. The poster highlights services including graphic design & branding, flex and banner printing, custom apparel, personalized gifts, stationery, packaging, signage, website design & development, digital marketing, and social media branding. The goal was to create a strong all-in-one brand presentation that communicates the company\'s capabilities, products, and professional identity at a glance while maintaining a modern, premium, and consistent visual style.',
     image: '/images/svdesizns poster.jpeg',
     tags: ['Branding', 'Graphic Design', 'Print Design', 'Advertising', 'Brand Identity', 'Marketing', 'Promotional Design'],
     instagramUrl: 'https://www.instagram.com/sv_desizns/'
+=======
+    title: 'SV DESIZNS – Complete Branding & Services Poster',
+    category: 'Branding',
+    description: 'A complete promotional branding poster designed for SV DESIZNS, showcasing the brand\'s full range of creative, printing, branding, and digital solutions in one professional visual composition. The design combines the official SV DESIZNS identity with a premium black, white, and gold visual language, featuring branded products such as custom T-shirts, mugs, business cards, stickers, packaging, signage, banners, and promotional materials alongside the brand\'s professional printing setup. The poster also highlights services including graphic design & branding, flex and banner printing, custom apparel, personalized gifts, stationery, packaging, signage, website design & development, digital marketing, and social media branding — creating a strong all-in-one brand presentation that communicates the company\'s capabilities and professional identity at a glance.',
+    image: '/images/svdesizns poster.png',
+    tags: ['Branding', 'Graphic Design', 'Print Design', 'Advertising', 'Brand Identity', 'Marketing', 'Promotional Design']
+>>>>>>> 5e75322 (Add AdSense verification code to index.html)
   }
 ]
 
