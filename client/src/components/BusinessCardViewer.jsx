@@ -74,7 +74,7 @@ const BusinessCardViewer = () => {
         camera={{ position: [0, 0, 10], fov: 40 }}
         gl={{ antialias: true, powerPreference: "high-performance" }}
         style={{
-          pointerEvents: 'auto',
+          pointerEvents: 'none',
           touchAction: 'pan-y'
         }}
       >
