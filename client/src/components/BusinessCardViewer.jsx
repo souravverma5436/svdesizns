@@ -71,7 +71,7 @@ const BusinessCardViewer = () => {
     }}>
       <Canvas
         shadows
-        camera={{ position: [0, 0, 7], fov: 40 }}
+        camera={{ position: [0, 0, 12], fov: 40 }}
         gl={{ antialias: true, powerPreference: "high-performance" }}
       >
         <ambientLight intensity={0.7} />
