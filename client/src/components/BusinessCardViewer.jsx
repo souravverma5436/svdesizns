@@ -67,7 +67,7 @@ const BusinessCardViewer = () => {
       background: 'transparent',
       position: 'relative',
       overflow: 'hidden',
-      touchAction: 'auto'
+      touchAction: 'pan-y'
     }}>
       <Canvas
         shadows
