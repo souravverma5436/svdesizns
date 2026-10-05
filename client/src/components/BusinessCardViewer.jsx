@@ -57,6 +57,15 @@ const BusinessCard = ({ rotationSpeed }) => {
 const BusinessCardViewer = () => {
   const [rotSpeed, setRotSpeed] = useState(0.005);
 
+  // Handle continuous rotation while pressing
+  const handleRotateLeft = (active) => {
+    setRotSpeed(active ? -0.03 : 0.005);
+  };
+
+  const handleRotateRight = (active) => {
+    setRotSpeed(active ? 0.03 : 0.005);
+  };
+
   return (
     <div style={{
       width: '100%',
@@ -69,7 +78,12 @@ const BusinessCardViewer = () => {
       <Canvas
         shadows
         camera={{ position: [0, 0, 10], fov: 40 }}
-        gl={{ antialias: true, powerPreference: "high-performance" }}
+        gl={{
+          antialias: false,
+          powerPreference: "high-performance",
+          stencil: false,
+          depth: true,
+        }}
         style={{
           pointerEvents: 'none',
           touchAction: 'pan-y'
@@ -108,7 +122,11 @@ const BusinessCardViewer = () => {
       {/* Professional Navigation Arrows */}
       <div className="absolute bottom-6 left-0 right-0 flex justify-center items-center gap-8 pointer-events-auto">
         <button
-          onClick={() => setRotSpeed(rotSpeed > 0 ? -rotSpeed : -0.005)}
+          onMouseDown={() => handleRotateLeft(true)}
+          onMouseUp={() => handleRotateLeft(false)}
+          onMouseLeave={() => handleRotateLeft(false)}
+          onTouchStart={() => handleRotateLeft(true)}
+          onTouchEnd={() => handleRotateLeft(false)}
           className="w-10 h-10 rounded-full border border-white/20 bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-primary/20 hover:border-primary/50 transition-all duration-300 active:scale-90 shadow-lg"
           aria-label="Rotate Left"
         >
@@ -118,7 +136,11 @@ const BusinessCardViewer = () => {
         </button>
 
         <button
-          onClick={() => setRotSpeed(rotSpeed < 0 ? -rotSpeed : 0.005)}
+          onMouseDown={() => handleRotateRight(true)}
+          onMouseUp={() => handleRotateRight(false)}
+          onMouseLeave={() => handleRotateRight(false)}
+          onTouchStart={() => handleRotateRight(true)}
+          onTouchEnd={() => handleRotateRight(false)}
           className="w-10 h-10 rounded-full border border-white/20 bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-primary/20 hover:border-primary/50 transition-all duration-300 active:scale-90 shadow-lg"
           aria-label="Rotate Right"
         >
