@@ -176,7 +176,7 @@ const Home = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <div className="relative w-full max-w-md mx-auto lg:max-w-2xl">
+            <div className="relative w-full max-w-[350px] mx-auto sm:max-w-3xl lg:max-w-5xl xl:max-w-6xl">
               <BusinessCardViewer />
             </div>
             <p className="text-gray-400 text-sm mt-4 animate-pulse text-center">Drag to rotate my business card ↔️</p>

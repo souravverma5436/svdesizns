@@ -63,15 +63,15 @@ const BusinessCardViewer = () => {
   return (
     <div style={{
       width: '100%',
-      height: 'min(600px, 80vh)',
+      height: 'min(500px, 70vh)',
       background: 'transparent',
       position: 'relative',
       overflow: 'hidden',
-      touchAction: 'none'
+      touchAction: 'pan-y'
     }}>
       <Canvas
         shadows
-        camera={{ position: [0, 0, 12], fov: 40 }}
+        camera={{ position: [0, 0, 10], fov: 40 }}
         gl={{ antialias: true, powerPreference: "high-performance" }}
       >
         <ambientLight intensity={0.7} />
