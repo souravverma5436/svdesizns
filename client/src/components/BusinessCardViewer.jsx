@@ -67,7 +67,7 @@ const BusinessCardViewer = () => {
       background: 'transparent',
       position: 'relative',
       overflow: 'hidden',
-      touchAction: 'pan-y'
+      touchAction: 'auto'
     }}>
       <Canvas
         shadows
@@ -101,6 +101,7 @@ const BusinessCardViewer = () => {
           maxPolarAngle={Math.PI / 1.5}
           enableDamping={true}
           dampingFactor={0.05}
+          disablePan={true}
         />
       </Canvas>
     </div>
