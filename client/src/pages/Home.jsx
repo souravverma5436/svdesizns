@@ -171,13 +171,15 @@ const Home = () => {
 
           {/* 3D Business Card Preview */}
           <motion.div
-            className="mt-12 mb-20"
+            className="mt-12 mb-20 relative z-10"
             initial={{ opacity: 0, scale: 1 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <BusinessCardViewer />
-            <p className="text-gray-400 text-sm mt-4 animate-pulse">Drag to rotate my business card ↔️</p>
+            <div className="relative w-full max-w-md mx-auto lg:max-w-2xl">
+              <BusinessCardViewer />
+            </div>
+            <p className="text-gray-400 text-sm mt-4 animate-pulse text-center">Drag to rotate my business card ↔️</p>
           </motion.div>
 
           <motion.div className="hidden lg:block absolute top-20 left-10 w-16 lg:w-20 h-16 lg:h-20 bg-gradient-to-r from-primary to-secondary rounded-full opacity-20" {...brandAnimations.floating} />

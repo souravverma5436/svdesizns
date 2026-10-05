@@ -13,7 +13,7 @@ const BusinessCard = () => {
   // Animation: Constant 360 rotation
   useFrame((state) => {
     if (cardRef.current) {
-      cardRef.current.rotation.y += 0.01;
+      cardRef.current.rotation.y += 0.005;
     }
   });
 
@@ -61,8 +61,19 @@ const BusinessCard = () => {
 
 const BusinessCardViewer = () => {
   return (
-    <div style={{ width: '100%', height: '600px', background: 'transparent' }}>
-      <Canvas shadows camera={{ position: [0, 0, 7], fov: 40 }}>
+    <div style={{
+      width: '100%',
+      height: 'min(600px, 80vh)',
+      background: 'transparent',
+      position: 'relative',
+      overflow: 'hidden',
+      touchAction: 'none'
+    }}>
+      <Canvas
+        shadows
+        camera={{ position: [0, 0, 7], fov: 40 }}
+        gl={{ antialias: true, powerPreference: "high-performance" }}
+      >
         <ambientLight intensity={0.7} />
 
         {/* High-impact Lighting */}
