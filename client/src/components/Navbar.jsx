@@ -38,9 +38,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="cursor-hover">
             <motion.div whileHover={{ scale: 1.05 }} className="flex items-center">
-              <div className="bg-black p-1 rounded-xl shadow-lg">
-                <img src="/images/svlogo.png" alt="SV Desizns Logo" className="w-12 h-12 sm:w-16 sm:h-16 object-contain" />
-              </div>
+              <img src="/images/svlogo.png" alt="SV Desizns Logo" className="w-12 h-12 sm:w-16 sm:h-16 object-contain" />
             </motion.div>
           </Link>
 
