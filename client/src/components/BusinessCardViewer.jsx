@@ -1,30 +1,25 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, useTexture, Center, Environment, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
 
-const BusinessCard = () => {
+const BusinessCard = ({ rotationSpeed }) => {
   const cardRef = useRef();
 
   // Load textures for front and back
   const frontTexture = useTexture('/images/frontside.jpeg');
   const backTexture = useTexture('/images/backside.jpeg');
 
-  // Animation: Constant 360 rotation
+  // Animation: Constant 360 rotation controlled by prop
   useFrame((state) => {
     if (cardRef.current) {
-      cardRef.current.rotation.y += 0.005;
+      cardRef.current.rotation.y += rotationSpeed;
     }
   });
 
   return (
     <Center>
       <mesh ref={cardRef} castShadow>
-        {/*
-           To ensure 100% visibility of images, we use boxGeometry.
-           Since RoundedBox is causing texture issues, we use a standard box
-           and focus on the professional lighting and materials.
-        */}
         <boxGeometry args={[5, 2.85, 0.1]} />
 
         {/* Side edges: Off-white for realism */}
@@ -60,6 +55,8 @@ const BusinessCard = () => {
 };
 
 const BusinessCardViewer = () => {
+  const [rotSpeed, setRotSpeed] = useState(0.005);
+
   return (
     <div style={{
       width: '100%',
@@ -80,7 +77,6 @@ const BusinessCardViewer = () => {
       >
         <ambientLight intensity={0.7} />
 
-        {/* High-impact Lighting */}
         <spotLight position={[5, 5, 5]} angle={0.3} penumbra={1} intensity={2} castShadow />
         <pointLight position={[-5, 2, 2]} intensity={0.8} color="#ffffff" />
         <pointLight position={[-10, -5, -5]} intensity={0.6} color="#6366f1" />
@@ -88,7 +84,7 @@ const BusinessCardViewer = () => {
 
         <Environment preset="studio" />
 
-        <BusinessCard />
+        <BusinessCard rotationSpeed={rotSpeed} />
 
         <ContactShadows
           position={[0, -2.2, 0]}
@@ -108,6 +104,29 @@ const BusinessCardViewer = () => {
           disablePan={true}
         />
       </Canvas>
+
+      {/* Professional Navigation Arrows */}
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center items-center gap-8 pointer-events-auto">
+        <button
+          onClick={() => setRotSpeed(rotSpeed > 0 ? -rotSpeed : -0.005)}
+          className="w-10 h-10 rounded-full border border-white/20 bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-primary/20 hover:border-primary/50 transition-all duration-300 active:scale-90 shadow-lg"
+          aria-label="Rotate Left"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <button
+          onClick={() => setRotSpeed(rotSpeed < 0 ? -rotSpeed : 0.005)}
+          className="w-10 h-10 rounded-full border border-white/20 bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-primary/20 hover:border-primary/50 transition-all duration-300 active:scale-90 shadow-lg"
+          aria-label="Rotate Right"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
     </div>
   );
 };
