@@ -98,8 +98,8 @@ const BusinessCardViewer = () => {
         <OrbitControls
           enableZoom={false}
           enablePan={false}
-          minPolarAngle={Math.PI / 3}
-          maxPolarAngle={Math.PI / 1.5}
+          minPolarAngle={Math.PI / 2}
+          maxPolarAngle={Math.PI / 2}
           enableDamping={true}
           dampingFactor={0.05}
           disablePan={true}
