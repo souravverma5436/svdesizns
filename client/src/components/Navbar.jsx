@@ -37,8 +37,8 @@ const Navbar = () => {
         <div className="flex justify-between items-center py-3 sm:py-4">
           {/* Logo */}
           <Link to="/" className="cursor-hover">
-            <motion.div whileHover={{ scale: 1.05 }} className="text-xl sm:text-2xl font-bold text-gradient">
-              SV
+            <motion.div whileHover={{ scale: 1.05 }} className="flex items-center">
+              <img src="/images/svlogo.png" alt="SV Desizns Logo" className="w-12 h-12 sm:w-16 sm:h-16 object-contain" />
             </motion.div>
           </Link>
 

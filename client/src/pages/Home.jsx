@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import { brandAnimations, viewportAnimations } from '../utils/animations'
 import { featuredProjects } from '../data/projects'
+import BusinessCardViewer from '../components/BusinessCardViewer'
 
 const TESTIMONIALS = [
   {
@@ -125,16 +126,16 @@ const Home = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto text-center w-full">
+        <div className="max-w-6xl mx-auto text-center w-full pt-20 sm:pt-32 lg:pt-40">
           <motion.div {...brandAnimations.slideInUp}>
             <motion.h1
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 leading-tight"
               {...brandAnimations.textReveal}
               transition={{ delay: 0.1, duration: 0.5 }}
             >
-              <span className="text-white">Hi, I'm </span>
+              <span className="text-white">Welcome to </span>
               <br className="sm:hidden" />
-              <span className="text-gradient">Sourav Verma</span>
+              <span className="text-gradient">SV Desizns</span>
             </motion.h1>
 
             <motion.p
@@ -142,7 +143,7 @@ const Home = () => {
               {...brandAnimations.textReveal}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-              Creative Graphic Designer & Visual Storyteller
+              Premium Graphic Design & Brand Identity Studio. We transform visions into stunning visual realities through creative storytelling and professional design.
             </motion.p>
 
             <motion.div
@@ -166,6 +167,17 @@ const Home = () => {
                 Contact Me
               </motion.button>
             </motion.div>
+          </motion.div>
+
+          {/* 3D Business Card Preview */}
+          <motion.div
+            className="mt-12 mb-20"
+            initial={{ opacity: 0, scale: 1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+          >
+            <BusinessCardViewer />
+            <p className="text-gray-400 text-sm mt-4 animate-pulse">Drag to rotate my business card ↔️</p>
           </motion.div>
 
           <motion.div className="hidden lg:block absolute top-20 left-10 w-16 lg:w-20 h-16 lg:h-20 bg-gradient-to-r from-primary to-secondary rounded-full opacity-20" {...brandAnimations.floating} />

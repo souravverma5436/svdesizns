@@ -1,0 +1,72 @@
+import { createClient } from '@sanity/client'
+import services from './src/data/services'
+
+const client = createClient({
+  projectId: '3xepbgz9',
+  dataset: 'production',
+  token: 'skz6eiJEKCwYPQuXBwpQ3fe2qfnhUhfqg5OYkoyKeAnDbmib0WX4jiVkTvpATNczjPeTAKIGWozTugni3IGDYVS34xI6hAenYOsaaPsMPbOEzlervLuGdcBoimHPWAMdTH3nb9Ej2PfNllj0Imt855Y5GcXrVJAT3W3WmwiF0GeQmu0TNZcq',
+  useCdn: false,
+  apiVersion: '2023-05-03',
+})
+
+const orderMap = {
+  'Logo Design': 1,
+  'Branding': 2,
+  'Social Media Design': 3,
+  'Poster / Banner Design': 4,
+  'Website Design': 5,
+  'Complete Package': 6,
+  'Reels Editing': 7,
+  'Menu Design': 8,
+  'YouTube Thumbnail Design': 9,
+  'Landing Page Design': 10,
+}
+
+async function cleanupAndMigrate() {
+  console.log('🧹 Starting Grand Cleanup...')
+
+  try {
+    // 1. Delete all existing services to remove duplicates
+    const existingServices = await client.fetch(`*[_type == "service"]`);
+    console.log(`🗑️ Deleting ${existingServices.length} old services to clear duplicates...`);
+
+    for (const s of existingServices) {
+      await client.delete(s._id);
+    }
+    console.log('✅ Database cleared.');
+
+    // 2. Re-upload with Proper Keys and Sort Order
+    console.log('🚀 Re-uploading clean data...');
+    for (const service of services) {
+      const sortOrder = orderMap[service.name] || 99;
+
+      await client.create({
+        _type: 'service',
+        name: service.name,
+        description: service.description,
+        icon: service.icon,
+        flexiblePricing: service.flexiblePricing || false,
+        sortOrder: sortOrder,
+        plans: service.plans.map((plan, pIdx) => ({
+          _type: 'object',
+          _key: `plan_${pIdx}`, // FIXES THE MISSING KEYS ERROR
+          name: plan.name,
+          price: plan.price,
+          popular: plan.popular || false,
+          features: plan.features.map((f, fIdx) => ({
+            _type: 'string',
+            _key: `feat_${fIdx}`, // FIXES THE MISSING KEYS ERROR
+            value: f
+          })),
+        })),
+      })
+      console.log(`✅ Uploaded & Sorted: ${service.name}`)
+    }
+    console.log('\n✨ SUCCESS! Your database is now clean, sorted, and error-free.')
+    console.log('Refresh your website and Sanity Studio to see the magic!')
+  } catch (err) {
+    console.error('❌ Cleanup failed:', err)
+  }
+}
+
+cleanupAndMigrate()
