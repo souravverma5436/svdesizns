@@ -67,6 +67,24 @@ const projects = [
     websiteUrl: 'https://spark-soul.vercel.app/'
   },
   {
+    id: 29,
+    title: 'Prem International',
+    category: 'Websites',
+    description: 'A premium business website for a printing and advertising company. Built with React and Vite, featuring a modern, professional design with high-performance animations and a fully responsive layout to showcase their premium printing services.',
+    image: '/images/prem international.png',
+    tags: ['Website', 'React', 'Vite', 'Business'],
+    websiteUrl: 'https://prem-international.vercel.app/'
+  },
+  {
+    id: 30,
+    title: 'New Harjinder Halftone Company',
+    category: 'Websites',
+    description: 'Professional corporate website for a specialized halftone printing business. Focuses on clarity, industry expertise, and a clean user interface, providing a seamless experience for B2B clients looking for high-quality printing solutions.',
+    image: '/images/new harjinder halftone website.png',
+    tags: ['Website', 'Corporate', 'Printing', 'React'],
+    websiteUrl: 'https://newharjinderhalftoneco.vercel.app/'
+  },
+  {
     id: 13,
     title: 'Shri Paramhans International',
     category: 'Websites',
@@ -84,6 +102,7 @@ const projects = [
     tags: ['Website', 'Pet Care', 'E-commerce'],
     websiteUrl: 'https://dogpetel.vercel.app/'
   },
+
   // --- Additional design projects ---
   {
     id: 9,
